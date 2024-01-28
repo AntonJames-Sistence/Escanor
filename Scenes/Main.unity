@@ -224,10 +224,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 910724956}
+  - component: {fileID: 910724957}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
-  m_Icon: {fileID: 2800000, guid: ffc58b5d1d8a6ed489be30f7a1291b1e, type: 3}
+  m_Icon: {fileID: 2800000, guid: a1bd3db90f5f7314e822ba2e38f901c6, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -246,58 +247,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1793053573
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1793053575}
-  - component: {fileID: 1793053574}
-  m_Layer: 0
-  m_Name: GridManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1793053574
+--- !u!114 &910724957
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1793053573}
+  m_GameObject: {fileID: 910724955}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6ec0a9e8725245ef97f3d28eed5c9d5, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f41c329cb5a54b3abfb8ffcc0351efe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _width: 16
-  _height: 9
-  _tilePrefab: {fileID: 6107679246992472685, guid: 8e2f7fb132df94fbb9025630c5f99609, type: 3}
-  _cam: {fileID: 519420032}
---- !u!4 &1793053575
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1793053573}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  width: 4
+  height: 7
+  tilePrefab: {fileID: 3791018284438028341, guid: e9b24fb6888d5451ea153631d3d7eaf3, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
-  - {fileID: 1793053575}
   - {fileID: 910724956}
