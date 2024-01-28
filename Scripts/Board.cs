@@ -9,11 +9,13 @@ public class Board : MonoBehaviour
     public GameObject tilePrefab;
     public GameObject[] elements;
     private BackgroundTile[,] allTiles;
+    public GameObject[,] allElements;
 
     // Start is called before the first frame update
     void Start()
     {
         allTiles = new BackgroundTile[width, height];
+        allElements = new GameObject[width, height];
         SetUp();
     }
 
@@ -32,6 +34,7 @@ public class Board : MonoBehaviour
                     GameObject element = Instantiate(elements[elementToUse], tempPosition, Quaternion.identity);
                     element.transform.parent = this.transform;
                     element.name = "( " + i + ", " + j + " )";
+                    allElements[i, j] = element;
                 }
                 else
                 {
