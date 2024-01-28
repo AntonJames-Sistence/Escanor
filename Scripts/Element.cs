@@ -12,6 +12,7 @@ public class Element : MonoBehaviour
     private GameObject neighborElement;
     private Vector2 firstTouchPosition;
     private Vector2 finalTouchPosition;
+    private Vector2 tempPosition;
     public float swipeAngle;
 
     // Start is called before the first frame update
@@ -29,6 +30,29 @@ public class Element : MonoBehaviour
     {
         targetX = column;
         targetY = row;
+        // Moving logic for left & right
+        if (Mathf.Abs(targetX - transform.position.x) > .1) { 
+            // Move towards the target
+            tempPosition = new Vector2(targetX, transform.position.y);
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .4f);
+        } else {
+            // Directly set the position
+            tempPosition = new Vector2(targetX, transform.position.y);
+            transform.position = tempPosition;
+            board.allElements[column, row] = this.gameObject;
+        }
+
+        // Moving logic for up & down
+        if (Mathf.Abs(targetY - transform.position.y) > .1) { 
+            // Move towards the target
+            tempPosition = new Vector2(transform.position.x, targetY);
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .4f);
+        } else {
+            // Directly set the position
+            tempPosition = new Vector2(transform.position.x, targetY);
+            transform.position = tempPosition;
+            board.allElements[column, row] = this.gameObject;
+        }
     }
 
     private void OnMouseDown()
@@ -50,26 +74,22 @@ public class Element : MonoBehaviour
 
     void SwapElements()
     {
-        if(swipeAngle > -45 && swipeAngle <= 45 && column < board.width)
-        {
+        if(swipeAngle > -45 && swipeAngle <= 45 && column < board.width){
             //Swap right
             neighborElement = board.allElements[column + 1, row];
             neighborElement.GetComponent<Element>().column -= 1;
             column += 1;
-        } else if(swipeAngle > 45 && swipeAngle <= 135 && row < board.height)
-        {
+        } else if(swipeAngle > 45 && swipeAngle <= 135 && row < board.height){
             //Swap up
             neighborElement = board.allElements[column, row + 1];
             neighborElement.GetComponent<Element>().row -= 1;
             row += 1;
-        } else if((swipeAngle > 135 || swipeAngle <= -135) && column > 0)
-        {
+        } else if((swipeAngle > 135 || swipeAngle <= -135) && column > 0){
             //Swap left
-            neighborElement = board.allElements[column + 1, row];
+            neighborElement = board.allElements[column - 1, row];
             neighborElement.GetComponent<Element>().column += 1;
             column -= 1;
-        } else if(swipeAngle < -45 && swipeAngle >= -135 && row > 0)
-        {
+        } else if(swipeAngle < -45 && swipeAngle >= -135 && row > 0){
             //Swap down
             neighborElement = board.allElements[column, row - 1];
             neighborElement.GetComponent<Element>().row += 1;
