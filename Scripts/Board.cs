@@ -34,10 +34,13 @@ public class Board : MonoBehaviour
                 {
                     int elementToUse = Random.Range(0, elements.Length);
 
-                    while (MatchesAt(i, j, elements[elementToUse]))
+                    int maxIterations = 0;
+                    while (MatchesAt(i, j, elements[elementToUse]) && maxIterations < 100)
                     {
                         elementToUse = Random.Range(0, elements.Length);
+                        maxIterations++;
                     }
+                    maxIterations = 0;
 
                     GameObject element = Instantiate(elements[elementToUse], tempPosition, Quaternion.identity);
                     element.transform.parent = this.transform;
@@ -67,6 +70,25 @@ public class Board : MonoBehaviour
                 {
                     return true;
                 }
+        }
+        else if (column <= 1 || row <= 1)
+        {
+            if (row > 1)
+            {
+                if (allElements[column, row - 1].tag == piece.tag &&
+                    allElements[column, row - 2].tag == piece.tag)
+                    {
+                        return true;
+                    }
+            }
+            if (column > 1)
+            {
+                if (allElements[column - 1, row].tag == piece.tag &&
+                    allElements[column - 2, row].tag == piece.tag)
+                    {
+                        return true;
+                    }
+            }
         }
 
         return false;
