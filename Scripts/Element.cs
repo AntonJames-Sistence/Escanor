@@ -8,6 +8,7 @@ public class Element : MonoBehaviour
     public int row;
     public int targetX;
     public int targetY;
+    public bool isMatched = false;
     private Board board;
     private GameObject neighborElement;
     private Vector2 firstTouchPosition;
@@ -28,6 +29,12 @@ public class Element : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        FindMatches();
+        if (isMatched){
+            SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
+            mySprite.color = new Color(0f, 0f, 0f, .25f);
+        }
+
         targetX = column;
         targetY = row;
         // Moving logic for left & right
@@ -94,6 +101,22 @@ public class Element : MonoBehaviour
             neighborElement = board.allElements[column, row - 1];
             neighborElement.GetComponent<Element>().row += 1;
             row -= 1;
+        }
+    }
+
+    void FindMatches(){
+        if (column > 0 && column < board.width - 1){
+            GameObject leftElement1 = board.allElements[column - 1, row];
+            GameObject leftElement2 = board.allElements[column - 2, row];
+
+            GameObject rightElement1 = board.allElements[column + 1, row];
+            GameObject rightElement2 = board.allElements[column + 2, row];
+
+            if (leftElement1.tag == this.gameObject.tag && rightElement1.tag == this.gameObject.tag){
+                leftElement1.GetComponent<Element>().isMatched = true;
+                rightElement1.GetComponent<Element>().isMatched = true;
+                isMatched = true;
+            }
         }
     }
 }
