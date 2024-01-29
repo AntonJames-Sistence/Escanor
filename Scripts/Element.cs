@@ -32,7 +32,7 @@ public class Element : MonoBehaviour
         FindMatches();
         if (isMatched){
             SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
-            mySprite.color = new Color(0f, 0f, 0f, .25f);
+            mySprite.color = new Color(1f, 1f, 1f, .25f);
         }
 
         targetX = column;
@@ -112,6 +112,17 @@ public class Element : MonoBehaviour
             if (leftElement1.tag == this.gameObject.tag && rightElement1.tag == this.gameObject.tag){
                 leftElement1.GetComponent<Element>().isMatched = true;
                 rightElement1.GetComponent<Element>().isMatched = true;
+                isMatched = true;
+            }
+        }
+
+        if (row > 0 && row < board.height - 1){
+            GameObject upElement1 = board.allElements[column, row + 1];
+            GameObject downElement1 = board.allElements[column, row - 1];
+
+            if (upElement1.tag == this.gameObject.tag && downElement1.tag == this.gameObject.tag){
+                upElement1.GetComponent<Element>().isMatched = true;
+                downElement1.GetComponent<Element>().isMatched = true;
                 isMatched = true;
             }
         }
