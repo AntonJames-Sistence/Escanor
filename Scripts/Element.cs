@@ -72,14 +72,14 @@ public class Element : MonoBehaviour
     {
         yield return new WaitForSeconds(.5f);
 
-        if (otherElement != null){
-            if (!isMatched && !otherElement.GetComponent<Element>().isMatched){
-                otherElement.GetComponent<Element>().row = row;
-                otherElement.GetComponent<Element>().column = column;
+        if (neighborElement != null){
+            if (!isMatched && !neighborElement.GetComponent<Element>().isMatched){
+                neighborElement.GetComponent<Element>().row = row;
+                neighborElement.GetComponent<Element>().column = column;
                 row = previousRow;
                 column = previousColumn;
             }
-            otherElement = null;
+            neighborElement = null;
         }
     }
 
