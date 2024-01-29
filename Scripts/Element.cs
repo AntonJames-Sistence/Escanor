@@ -19,6 +19,7 @@ public class Element : MonoBehaviour
     private Vector2 finalTouchPosition;
     private Vector2 tempPosition;
     public float swipeAngle;
+    public float swipeResistance = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -96,8 +97,12 @@ public class Element : MonoBehaviour
 
     void CalculateAngle()
     {
-        swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
-        SwapElements();
+        if (Mathf.Abs(finalTouchPosition.y - firstTouchPosition.y) > swipeResistance || 
+            Mathf.Abs(finalTouchPosition.x - firstTouchPosition.x) > swipeResistance)
+        {
+            swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
+            SwapElements();
+        }
     }
 
     void SwapElements()
