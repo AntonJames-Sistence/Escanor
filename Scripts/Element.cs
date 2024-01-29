@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Element : MonoBehaviour
 {
+    [Header("Board Variables")]
     public int column;
     public int row;
+    public int previousColumn;
+    public int previousRow;
     public int targetX;
     public int targetY;
     public bool isMatched = false;
+
     private Board board;
     private GameObject neighborElement;
     private Vector2 firstTouchPosition;
@@ -24,6 +28,8 @@ public class Element : MonoBehaviour
         targetY = (int)transform.position.y;
         row = targetY;
         column = targetX;
+        previousRow = row;
+        previousColumn = column;
     }
 
     // Update is called once per frame
@@ -62,6 +68,21 @@ public class Element : MonoBehaviour
         }
     }
 
+    public IEnumerator CheckMoveCo() 
+    {
+        yield return new WaitForSeconds(.5f);
+
+        if (otherElement != null){
+            if (!isMatched && !otherElement.GetComponent<Element>().isMatched){
+                otherElement.GetComponent<Element>().row = row;
+                otherElement.GetComponent<Element>().column = column;
+                row = previousRow;
+                column = previousColumn;
+            }
+            otherElement = null;
+        }
+    }
+
     private void OnMouseDown()
     {
         firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -81,12 +102,12 @@ public class Element : MonoBehaviour
 
     void SwapElements()
     {
-        if(swipeAngle > -45 && swipeAngle <= 45 && column < board.width){
+        if(swipeAngle > -45 && swipeAngle <= 45 && column < board.width - 1){
             //Swap right
             neighborElement = board.allElements[column + 1, row];
             neighborElement.GetComponent<Element>().column -= 1;
             column += 1;
-        } else if(swipeAngle > 45 && swipeAngle <= 135 && row < board.height){
+        } else if(swipeAngle > 45 && swipeAngle <= 135 && row < board.height - 1){
             //Swap up
             neighborElement = board.allElements[column, row + 1];
             neighborElement.GetComponent<Element>().row -= 1;
@@ -102,9 +123,11 @@ public class Element : MonoBehaviour
             neighborElement.GetComponent<Element>().row += 1;
             row -= 1;
         }
+        StartCoroutine(CheckMoveCo());
     }
 
-    void FindMatches(){
+    void FindMatches()
+    {
         if (column > 0 && column < board.width - 1){
             GameObject leftElement1 = board.allElements[column - 1, row];
             GameObject rightElement1 = board.allElements[column + 1, row];
