@@ -107,10 +107,7 @@ public class Element : MonoBehaviour
     void FindMatches(){
         if (column > 0 && column < board.width - 1){
             GameObject leftElement1 = board.allElements[column - 1, row];
-            GameObject leftElement2 = board.allElements[column - 2, row];
-
             GameObject rightElement1 = board.allElements[column + 1, row];
-            GameObject rightElement2 = board.allElements[column + 2, row];
 
             if (leftElement1.tag == this.gameObject.tag && rightElement1.tag == this.gameObject.tag){
                 leftElement1.GetComponent<Element>().isMatched = true;
