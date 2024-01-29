@@ -21,8 +21,10 @@ public class Board : MonoBehaviour
 
     private void SetUp()
     {
-        for (int i = 0; i < width; i++){
-            for (int j = 0; j < height; j++){
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
                 Vector2 tempPosition = new Vector2(i, j);
                 GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
                 backgroundTile.transform.parent = this.transform;
@@ -31,6 +33,12 @@ public class Board : MonoBehaviour
                 if (elements.Length > 0)
                 {
                     int elementToUse = Random.Range(0, elements.Length);
+
+                    while (MatchesAt(i, j, elements[elementToUse]))
+                    {
+                        elementToUse = Random.Range(0, elements.Length);
+                    }
+
                     GameObject element = Instantiate(elements[elementToUse], tempPosition, Quaternion.identity);
                     element.transform.parent = this.transform;
                     element.name = "( " + i + ", " + j + " )";
@@ -42,5 +50,25 @@ public class Board : MonoBehaviour
                 }
             }
         }
+    }
+
+    private bool MatchesAt(int column, int row, GameObject piece)
+    {
+        if (column > 1 && row > 1)
+        {
+            if (allElements[column - 1, row].tag == piece.tag &&
+                allElements[column - 2, row].tag == piece.tag)
+                {
+                    return true;
+                }
+
+            if (allElements[column, row - 1].tag == piece.tag &&
+                allElements[column, row - 2].tag == piece.tag)
+                {
+                    return true;
+                }
+        }
+
+        return false;
     }
 }

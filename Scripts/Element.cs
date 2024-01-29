@@ -16,10 +16,10 @@ public class Element : MonoBehaviour
     private Board board;
     private GameObject neighborElement;
     private Vector2 firstTouchPosition;
-    private Vector2 finalTouchPosition;
+    private Vector2 lastTouchPosition;
     private Vector2 tempPosition;
     public float swipeAngle;
-    public float swipeResistance = 1f;
+    public float swipeResistance = .7f;
 
     // Start is called before the first frame update
     void Start()
@@ -91,16 +91,16 @@ public class Element : MonoBehaviour
 
     private void OnMouseUp()
     {
-        finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        lastTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         CalculateAngle();
     }
 
     void CalculateAngle()
     {
-        if (Mathf.Abs(finalTouchPosition.y - firstTouchPosition.y) > swipeResistance || 
-            Mathf.Abs(finalTouchPosition.x - firstTouchPosition.x) > swipeResistance)
+        if (Mathf.Abs(lastTouchPosition.y - firstTouchPosition.y) > swipeResistance || 
+            Mathf.Abs(lastTouchPosition.x - firstTouchPosition.x) > swipeResistance)
         {
-            swipeAngle = Mathf.Atan2(finalTouchPosition.y - firstTouchPosition.y, finalTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
+            swipeAngle = Mathf.Atan2(lastTouchPosition.y - firstTouchPosition.y, lastTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
             SwapElements();
         }
     }
