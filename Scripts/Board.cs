@@ -133,6 +133,7 @@ public class Board : MonoBehaviour
                 else if (nullCount > 0)
                 {
                     allElements[i, j].GetComponent<Element>().row -= nullCount;
+                    allElements[i, j] = null;
                 }
             }
             nullCount = 0;

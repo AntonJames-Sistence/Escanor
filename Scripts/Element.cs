@@ -45,27 +45,39 @@ public class Element : MonoBehaviour
         targetX = column;
         targetY = row;
         // Moving logic for left & right
-        if (Mathf.Abs(targetX - transform.position.x) > .1) { 
+        if (Mathf.Abs(targetX - transform.position.x) > .1) 
+        { 
             // Move towards the target
             tempPosition = new Vector2(targetX, transform.position.y);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .4f);
-        } else {
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
+            if (board.allElements[column, row] != this.gameObject)
+            {
+                board.allElements[column, row] = this.gameObject;
+            }
+        } 
+        else 
+        {
             // Directly set the position
             tempPosition = new Vector2(targetX, transform.position.y);
             transform.position = tempPosition;
-            board.allElements[column, row] = this.gameObject;
         }
 
         // Moving logic for up & down
-        if (Mathf.Abs(targetY - transform.position.y) > .1) { 
+        if (Mathf.Abs(targetY - transform.position.y) > .1) 
+        { 
             // Move towards the target
             tempPosition = new Vector2(transform.position.x, targetY);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .4f);
-        } else {
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
+            if (board.allElements[column, row] != this.gameObject)
+            {
+                board.allElements[column, row] = this.gameObject;
+            }
+        } 
+        else 
+        {
             // Directly set the position
             tempPosition = new Vector2(transform.position.x, targetY);
             transform.position = tempPosition;
-            board.allElements[column, row] = this.gameObject;
         }
     }
 
