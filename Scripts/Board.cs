@@ -115,6 +115,30 @@ public class Board : MonoBehaviour
                 }
             }
         }
+
+        StartCoroutine(DecreaseRowCo());
+    }
+
+    private IEnumerator DecreaseRowCo()
+    {
+        int nullCount = 0;
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if (allElements[i, j] == null)
+                {
+                    nullCount++;
+                }
+                else if (nullCount > 0)
+                {
+                    allElements[i, j].GetComponent<Element>().row -= nullCount;
+                }
+            }
+            nullCount = 0;
+        }
+
+        yield return new WaitForSeconds(.4f);
     }
 
 }
