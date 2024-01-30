@@ -93,4 +93,14 @@ public class Board : MonoBehaviour
 
         return false;
     }
+
+    private void DestroyMatchesAt(int column, int row)
+    {
+        if (allElements[column, row].GetComponent<Element>().isMatched)
+        {
+            Destroy(allElements[column, row]);
+            allElements[column, row] = null;
+        }
+    }
+
 }
