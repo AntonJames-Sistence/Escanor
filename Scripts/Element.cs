@@ -73,15 +73,21 @@ public class Element : MonoBehaviour
     {
         yield return new WaitForSeconds(.5f);
 
-        if (neighborElement != null){
-            if (!isMatched && !neighborElement.GetComponent<Element>().isMatched){
+        if (neighborElement != null)
+        {
+            if (!isMatched && !neighborElement.GetComponent<Element>().isMatched)
+            {
                 neighborElement.GetComponent<Element>().row = row;
                 neighborElement.GetComponent<Element>().column = column;
                 row = previousRow;
                 column = previousColumn;
             }
+            else
+            {
+                board.DestroyMatches();
+            }
             neighborElement = null;
-        }
+        } 
     }
 
     private void OnMouseDown()
