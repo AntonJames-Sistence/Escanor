@@ -142,4 +142,21 @@ public class Board : MonoBehaviour
         yield return new WaitForSeconds(.4f);
     }
 
+    private void RefillBoard()
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if (allElements[i, j] == null) // has additional hasBeenUsed
+                {
+                    Vector2 tempPosition = new Vector2(i, j);
+                    int elementToUse = Random.Range(0, elements.Length);
+                    GameObject element = Instantiate(elements[elementToUse], tempPosition, Quaternion.identity);
+                    allElements[i, j] = piece;
+                }
+            }
+        }
+    }
+
 }
