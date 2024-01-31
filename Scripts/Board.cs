@@ -148,18 +148,18 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                if (allElements[i, j] == null) // has additional hasBeenUsed
+                if (allElements[i, j] == null) // has additional hasBeenUsed?
                 {
                     Vector2 tempPosition = new Vector2(i, j);
                     int elementToUse = Random.Range(0, elements.Length);
-                    GameObject element = Instantiate(elements[elementToUse], tempPosition, Quaternion.identity);
+                    GameObject piece = Instantiate(elements[elementToUse], tempPosition, Quaternion.identity);
                     allElements[i, j] = piece;
                 }
             }
         }
     }
 
-    private void MatchesOnBoard()
+    private bool MatchesOnBoard()
     {
         for (int i = 0; i < width; i++)
         {
