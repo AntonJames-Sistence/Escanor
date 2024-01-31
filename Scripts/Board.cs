@@ -140,6 +140,7 @@ public class Board : MonoBehaviour
         }
 
         yield return new WaitForSeconds(.4f);
+        StartCoroutine(FillBoardCo());
     }
 
     private void RefillBoard()
