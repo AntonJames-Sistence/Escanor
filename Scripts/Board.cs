@@ -159,4 +159,34 @@ public class Board : MonoBehaviour
         }
     }
 
+    private void MatchesOnBoard()
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                if (allElements[i, j] != null)
+                {
+                    if (allElements[i, j].GetComponent<Element>().isMatched)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private IEnumerator FillBoardCo()
+    {
+        RefillBoard();
+        yield return new WaitForSeconds(.5f);
+
+        while (MatchesOnBoard())
+        {
+            yield return new WaitForSeconds(.5f);
+            DestroyMatches();
+        }
+    }
+
 }
