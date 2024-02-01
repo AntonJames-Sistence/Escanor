@@ -200,6 +200,8 @@ public class Board : MonoBehaviour
             yield return new WaitForSeconds(.5f);
             DestroyMatches();
         }
+        yield return new WaitForSeconds(.5f);
+        currentState = GameState.move;
     }
 
 }

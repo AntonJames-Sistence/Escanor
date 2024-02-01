@@ -93,6 +93,8 @@ public class Element : MonoBehaviour
                 neighborElement.GetComponent<Element>().column = column;
                 row = previousRow;
                 column = previousColumn;
+                yield return new WaitForSeconds(.5f);
+                board.currentState = GameState.move;
             }
             else
             {
@@ -104,13 +106,19 @@ public class Element : MonoBehaviour
 
     private void OnMouseDown()
     {
-        firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (board.currentState == GameState.move)
+        {
+            firstTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
     }
 
     private void OnMouseUp()
     {
-        lastTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        CalculateAngle();
+        if (board.currentState == GameState.move)
+        {
+            lastTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            CalculateAngle();
+        }
     }
 
     void CalculateAngle()
@@ -120,6 +128,11 @@ public class Element : MonoBehaviour
         {
             swipeAngle = Mathf.Atan2(lastTouchPosition.y - firstTouchPosition.y, lastTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
             SwapElements();
+            board.currentState = GameState.wait;
+        }
+        else
+        {
+            board.currentState = GameState.move;
         }
     }
 
