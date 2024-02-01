@@ -154,10 +154,12 @@ public class Board : MonoBehaviour
             {
                 if (allElements[i, j] == null) // has additional hasBeenUsed?
                 {
-                    Vector2 tempPosition = new Vector2(i, j);
+                    Vector2 tempPosition = new Vector2(i, j + offSet);
                     int elementToUse = Random.Range(0, elements.Length);
                     GameObject piece = Instantiate(elements[elementToUse], tempPosition, Quaternion.identity);
                     allElements[i, j] = piece;
+                    piece.GetComponent<Element>().row = j;
+                    piece.GetComponent<Element>().column = i;
                 }
             }
         }
