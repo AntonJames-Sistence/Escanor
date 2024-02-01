@@ -2,8 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GameState
+{
+    wait,
+    move
+}
+
 public class Board : MonoBehaviour
 {
+    public GameState currentState = GameState.move;
     public int width;
     public int height;
     public int offSet;
