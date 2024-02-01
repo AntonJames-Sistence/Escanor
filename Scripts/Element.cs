@@ -25,12 +25,12 @@ public class Element : MonoBehaviour
     void Start()
     {
         board = FindObjectOfType<Board>();
-        targetX = (int)transform.position.x;
-        targetY = (int)transform.position.y;
-        row = targetY;
-        column = targetX;
-        previousRow = row;
-        previousColumn = column;
+        // targetX = (int)transform.position.x;
+        // targetY = (int)transform.position.y;
+        // row = targetY;
+        // column = targetX;
+        // previousRow = row;
+        // previousColumn = column;
     }
 
     // Update is called once per frame
