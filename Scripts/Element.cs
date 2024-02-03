@@ -13,6 +13,8 @@ public class Element : MonoBehaviour
     public int targetY;
     public bool isMatched = false;
 
+
+    private FindMatches findMatches;
     private Board board;
     private GameObject neighborElement;
     private Vector2 firstTouchPosition;
@@ -25,6 +27,7 @@ public class Element : MonoBehaviour
     void Start()
     {
         board = FindObjectOfType<Board>();
+        findMatches = FindObjectOfType<FindMatches>();
         // targetX = (int)transform.position.x;
         // targetY = (int)transform.position.y;
         // row = targetY;
@@ -36,7 +39,8 @@ public class Element : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FindMatches();
+        // FindMatches();
+
         if (isMatched){
             SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
             mySprite.color = new Color(1f, 1f, 1f, .25f);
@@ -54,6 +58,8 @@ public class Element : MonoBehaviour
             {
                 board.allElements[column, row] = this.gameObject;
             }
+
+            findMatches.FindAllMatches();
         } 
         else 
         {
@@ -72,6 +78,8 @@ public class Element : MonoBehaviour
             {
                 board.allElements[column, row] = this.gameObject;
             }
+
+            findMatches.FindAllMatches();
         } 
         else 
         {
@@ -170,34 +178,34 @@ public class Element : MonoBehaviour
         StartCoroutine(CheckMoveCo());
     }
 
-    void FindMatches()
-    {
-        if (column > 0 && column < board.width - 1){
-            GameObject leftElement1 = board.allElements[column - 1, row];
-            GameObject rightElement1 = board.allElements[column + 1, row];
+    // void FindMatches()
+    // {
+    //     if (column > 0 && column < board.width - 1){
+    //         GameObject leftElement1 = board.allElements[column - 1, row];
+    //         GameObject rightElement1 = board.allElements[column + 1, row];
 
-            if (leftElement1 != null && rightElement1 != null)
-            {
-                if (leftElement1.tag == this.gameObject.tag && rightElement1.tag == this.gameObject.tag){
-                    leftElement1.GetComponent<Element>().isMatched = true;
-                    rightElement1.GetComponent<Element>().isMatched = true;
-                    isMatched = true;
-                }
-            }
-        }
+    //         if (leftElement1 != null && rightElement1 != null)
+    //         {
+    //             if (leftElement1.tag == this.gameObject.tag && rightElement1.tag == this.gameObject.tag){
+    //                 leftElement1.GetComponent<Element>().isMatched = true;
+    //                 rightElement1.GetComponent<Element>().isMatched = true;
+    //                 isMatched = true;
+    //             }
+    //         }
+    //     }
 
-        if (row > 0 && row < board.height - 1){
-            GameObject upElement1 = board.allElements[column, row + 1];
-            GameObject downElement1 = board.allElements[column, row - 1];
+    //     if (row > 0 && row < board.height - 1){
+    //         GameObject upElement1 = board.allElements[column, row + 1];
+    //         GameObject downElement1 = board.allElements[column, row - 1];
 
-            if (upElement1 != null && downElement1 != null)
-            {
-                if (upElement1.tag == this.gameObject.tag && downElement1.tag == this.gameObject.tag){
-                    upElement1.GetComponent<Element>().isMatched = true;
-                    downElement1.GetComponent<Element>().isMatched = true;
-                    isMatched = true;
-                }
-            }
-        }
-    }
+    //         if (upElement1 != null && downElement1 != null)
+    //         {
+    //             if (upElement1.tag == this.gameObject.tag && downElement1.tag == this.gameObject.tag){
+    //                 upElement1.GetComponent<Element>().isMatched = true;
+    //                 downElement1.GetComponent<Element>().isMatched = true;
+    //                 isMatched = true;
+    //             }
+    //         }
+    //     }
+    // }
 }

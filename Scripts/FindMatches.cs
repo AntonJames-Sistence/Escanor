@@ -13,6 +13,11 @@ public class FindMatches : MonoBehaviour
         board = FindObjectOfType<Board>();
     }
 
+    public void FindAllMatches()
+    {
+        StartCoroutine(FindMatchesCo());
+    }
+
     private IEnumerator FindMatchesCo()
     {
         yield return new WaitForSeconds(.2f);
