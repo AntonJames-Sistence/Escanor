@@ -39,8 +39,22 @@ public class FindMatches : MonoBehaviour
                         {
                             if (leftElement.tag == currentElement.tag && rightElement.tag == currentElement.tag)
                             {
+                                if (!currentMatches.Contains(leftElement))
+                                {
+                                    currentMatches.Add(leftElement);
+                                }
                                 leftElement.GetComponent<Element>().isMatched = true;
+
+                                if (!currentMatches.Contains(rightElement))
+                                {
+                                    currentMatches.Add(rightElement);
+                                }
                                 rightElement.GetComponent<Element>().isMatched = true;
+
+                                if (!currentMatches.Contains(currentElement))
+                                {
+                                    currentMatches.Add(currentElement);
+                                }
                                 currentElement.GetComponent<Element>().isMatched = true;
                             }
                         }
@@ -55,8 +69,22 @@ public class FindMatches : MonoBehaviour
                         {
                             if (upElement.tag == currentElement.tag && downElement.tag == currentElement.tag)
                             {
+                                if (!currentMatches.Contains(upElement))
+                                {
+                                    currentMatches.Add(upElement);
+                                }
                                 upElement.GetComponent<Element>().isMatched = true;
+
+                                if (!currentMatches.Contains(downElement))
+                                {
+                                    currentMatches.Add(downElement);
+                                }
                                 downElement.GetComponent<Element>().isMatched = true;
+
+                                if (!currentMatches.Contains(currentElement))
+                                {
+                                    currentMatches.Add(currentElement);
+                                }
                                 currentElement.GetComponent<Element>().isMatched = true;
                             }
                         }
