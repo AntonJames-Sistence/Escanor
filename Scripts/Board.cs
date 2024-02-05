@@ -17,6 +17,7 @@ public class Board : MonoBehaviour
     public GameObject tilePrefab;
     public GameObject[] elements;
     public GameObject[,] allElements;
+    public GameObject destroyEffect;
 
     private BackgroundTile[,] allTiles;
     private FindMatches findMatches;
@@ -112,6 +113,8 @@ public class Board : MonoBehaviour
         if (allElements[column, row].GetComponent<Element>().isMatched)
         {
             findMatches.currentMatches.Remove(allElements[column, row]);
+            GameObject destroyAnimation = Instantiate(destroyEffect, allElements[column, row].transform.position, Quaternion.identity);
+            Destroy(destroyAnimation, .5f);
             Destroy(allElements[column, row]);
             allElements[column, row] = null;
         }
