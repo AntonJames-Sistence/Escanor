@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class FindMatches : MonoBehaviour
 {
@@ -39,6 +40,15 @@ public class FindMatches : MonoBehaviour
                         {
                             if (leftElement.tag == currentElement.tag && rightElement.tag == currentElement.tag)
                             {
+                                // Check for row explosion
+                                if (currentElement.GetComponent<Element>().isRowBomb
+                                    || leftElement.GetComponent<Element>().isRowBomb
+                                    || rightElement.GetComponent<Element>().isRowBomb)
+                                    {
+                                        currentMatches.Union(GetRowElements(j));
+                                    }
+
+
                                 if (!currentMatches.Contains(leftElement))
                                 {
                                     currentMatches.Add(leftElement);
