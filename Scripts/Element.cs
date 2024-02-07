@@ -52,8 +52,8 @@ public class Element : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            isColumnBomb = true;
-            GameObject explosion = Instantiate(columnExplosion, transform.position, Quaternion.identity);
+            isRowBomb = true;
+            GameObject explosion = Instantiate(rowExplosion, transform.position, Quaternion.identity);
             explosion.transform.parent = this.transform;
         }
     }

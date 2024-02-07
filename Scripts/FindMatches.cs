@@ -94,4 +94,38 @@ public class FindMatches : MonoBehaviour
         }
     }
 
+    // Helper function to grab board column Elements
+    List<GameObject> GetColumnElements(int column)
+    {
+        List<GameObject> elements = new List<GameObject>();
+
+        for (int i = 0; i < board.height; i++)
+        {
+            if (board.allElements[column, i] != null)
+            {
+                elements.Add(board.allElements[column, i]);
+                board.allElements[column, i].GetComponent<Element>().isMatched = true;
+            }
+        }
+
+        return elements;
+    }
+    
+    // Helper function to grab board row Elements
+    List<GameObject> GetRowElements(int row)
+    {
+        List<GameObject> elements = new List<GameObject>();
+
+        for (int i = 0; i < board.width; i++)
+        {
+            if (board.allElements[i, row] != null)
+            {
+                elements.Add(board.allElements[i, row]);
+                board.allElements[i, row].GetComponent<Element>().isMatched = true;
+            }
+        }
+
+        return elements;
+    }
+
 }

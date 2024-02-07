@@ -156,7 +156,7 @@ public class Board : MonoBehaviour
             nullCount = 0;
         }
 
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.4f);
         StartCoroutine(FillBoardCo());
     }
 
@@ -207,7 +207,7 @@ public class Board : MonoBehaviour
             yield return new WaitForSeconds(.3f);
             DestroyMatches();
         }
-        
+
         yield return new WaitForSeconds(.5f);
         currentState = GameState.move;
     }
