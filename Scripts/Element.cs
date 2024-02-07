@@ -75,7 +75,7 @@ public class Element : MonoBehaviour
         { 
             // Move towards the target
             tempPosition = new Vector2(targetX, transform.position.y);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .3f);
             if (board.allElements[column, row] != this.gameObject)
             {
                 board.allElements[column, row] = this.gameObject;
@@ -95,7 +95,7 @@ public class Element : MonoBehaviour
         { 
             // Move towards the target
             tempPosition = new Vector2(transform.position.x, targetY);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .3f);
             if (board.allElements[column, row] != this.gameObject)
             {
                 board.allElements[column, row] = this.gameObject;
@@ -113,6 +113,7 @@ public class Element : MonoBehaviour
 
     public IEnumerator CheckMoveCo() 
     {
+        board.currentState = GameState.wait; // board freeze state
         yield return new WaitForSeconds(.3f);
 
         if (neighborElement != null)
@@ -123,7 +124,7 @@ public class Element : MonoBehaviour
                 neighborElement.GetComponent<Element>().column = column;
                 row = previousRow;
                 column = previousColumn;
-                yield return new WaitForSeconds(.3f);
+                yield return new WaitForSeconds(.2f);
                 board.currentState = GameState.move;
             }
             else
@@ -131,7 +132,8 @@ public class Element : MonoBehaviour
                 board.DestroyMatches();
             }
             neighborElement = null;
-        } 
+        }
+        board.currentState = GameState.move; // board unfreeze
     }
 
     private void OnMouseDown()
@@ -158,11 +160,6 @@ public class Element : MonoBehaviour
         {
             swipeAngle = Mathf.Atan2(lastTouchPosition.y - firstTouchPosition.y, lastTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
             SwapElements();
-            board.currentState = GameState.wait;
-        }
-        else
-        {
-            board.currentState = GameState.move;
         }
     }
 

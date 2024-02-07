@@ -114,7 +114,7 @@ public class Board : MonoBehaviour
         {
             findMatches.currentMatches.Remove(allElements[column, row]);
             GameObject destroyAnimation = Instantiate(destroyEffect, allElements[column, row].transform.position, Quaternion.identity);
-            Destroy(destroyAnimation, .5f);
+            Destroy(destroyAnimation, .3f);
             Destroy(allElements[column, row]);
             allElements[column, row] = null;
         }
@@ -156,7 +156,7 @@ public class Board : MonoBehaviour
             nullCount = 0;
         }
 
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(.3f);
         StartCoroutine(FillBoardCo());
     }
 
@@ -204,9 +204,10 @@ public class Board : MonoBehaviour
 
         while (MatchesOnBoard())
         {
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.3f);
             DestroyMatches();
         }
+        
         yield return new WaitForSeconds(.5f);
         currentState = GameState.move;
     }
