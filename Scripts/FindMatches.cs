@@ -40,14 +40,26 @@ public class FindMatches : MonoBehaviour
                         {
                             if (leftElement.tag == currentElement.tag && rightElement.tag == currentElement.tag)
                             {
-                                // Check for row explosion
+                                // Logic for row explosion when horizontal match
                                 if (currentElement.GetComponent<Element>().isRowBomb
                                     || leftElement.GetComponent<Element>().isRowBomb
                                     || rightElement.GetComponent<Element>().isRowBomb)
-                                    {
-                                        currentMatches.Union(GetRowElements(j));
-                                    }
-
+                                {
+                                    currentMatches.Union(GetRowElements(j));
+                                }
+                                // Logic for column explosion when there's vertical match
+                                if (currentElement.GetComponent<Element>().isColumnBomb)
+                                {
+                                    currentMatches.Union(GetColumnElements(i)); // Center piece
+                                }
+                                if (leftElement.GetComponent<Element>().isColumnBomb)
+                                {
+                                    currentMatches.Union(GetColumnElements(i - 1)); // Left piece
+                                }
+                                if (rightElement.GetComponent<Element>().isColumnBomb)
+                                {
+                                    currentMatches.Union(GetColumnElements(i + 1)); // Right piece
+                                }
 
                                 if (!currentMatches.Contains(leftElement))
                                 {
@@ -79,6 +91,27 @@ public class FindMatches : MonoBehaviour
                         {
                             if (upElement.tag == currentElement.tag && downElement.tag == currentElement.tag)
                             {
+                                // Check for column explosion
+                                if (currentElement.GetComponent<Element>().isColumnBomb
+                                    || upElement.GetComponent<Element>().isColumnBomb
+                                    || downElement.GetComponent<Element>().isColumnBomb)
+                                {
+                                    currentMatches.Union(GetColumnElements(i));
+                                }
+                                // Logic for row explosion when there's horizontal match
+                                if (currentElement.GetComponent<Element>().isRowBomb)
+                                {
+                                    currentMatches.Union(GetRowElements(j)); // Center piece
+                                }
+                                if (upElement.GetComponent<Element>().isRowBomb)
+                                {
+                                    currentMatches.Union(GetRowElements(j + 1)); // Left piece
+                                }
+                                if (downElement.GetComponent<Element>().isRowBomb)
+                                {
+                                    currentMatches.Union(GetRowElements(j - 1)); // Right piece
+                                }
+
                                 if (!currentMatches.Contains(upElement))
                                 {
                                     currentMatches.Add(upElement);
