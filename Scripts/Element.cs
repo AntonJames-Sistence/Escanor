@@ -20,12 +20,23 @@ public class Element : MonoBehaviour
     private Vector2 firstTouchPosition;
     private Vector2 lastTouchPosition;
     private Vector2 tempPosition;
+
+    [Header("Swipe Variables")]
     public float swipeAngle;
     public float swipeResistance = .7f;
+
+    [Header("Powerup Variables")]
+    public bool isColumnBomb;
+    public bool isRowBomb;
+    public GameObject columnExplosion;
+    public GameObject rowExplosion;
 
     // Start is called before the first frame update
     void Start()
     {
+        isColumnBomb = false;
+        isRowBomb = false;
+
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
         // targetX = (int)transform.position.x;
@@ -34,6 +45,17 @@ public class Element : MonoBehaviour
         // column = targetX;
         // previousRow = row;
         // previousColumn = column;
+    }
+
+    // Testing and debuggin purposes
+    private void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            isColumnBomb = true;
+            GameObject explosion = Instantiate(columnExplosion, transform.position, Quaternion.identity);
+            explosion.transform.parent = this.transform;
+        }
     }
 
     // Update is called once per frame
@@ -91,7 +113,7 @@ public class Element : MonoBehaviour
 
     public IEnumerator CheckMoveCo() 
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.3f);
 
         if (neighborElement != null)
         {
@@ -101,7 +123,7 @@ public class Element : MonoBehaviour
                 neighborElement.GetComponent<Element>().column = column;
                 row = previousRow;
                 column = previousColumn;
-                yield return new WaitForSeconds(.5f);
+                yield return new WaitForSeconds(.3f);
                 board.currentState = GameState.move;
             }
             else
