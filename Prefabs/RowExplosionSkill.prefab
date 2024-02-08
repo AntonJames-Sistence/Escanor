@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6067475419126752724}
   - component: {fileID: 6424541952501112193}
   m_Layer: 0
-  m_Name: Row Explosion
+  m_Name: RowExplosionSkill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
