@@ -12,11 +12,11 @@ public class Element : MonoBehaviour
     public int targetX;
     public int targetY;
     public bool isMatched = false;
+    public GameObject neighborElement;
 
 
     private FindMatches findMatches;
     private Board board;
-    private GameObject neighborElement;
     private Vector2 firstTouchPosition;
     private Vector2 lastTouchPosition;
     private Vector2 tempPosition;
@@ -26,16 +26,16 @@ public class Element : MonoBehaviour
     public float swipeResistance = .7f;
 
     [Header("Powerup Variables")]
-    public bool isColumnBomb;
-    public bool isRowBomb;
-    public GameObject columnExplosion;
-    public GameObject rowExplosion;
+    public bool isColumnExplosion;
+    public bool isRowExplosion;
+    public GameObject columnExplosionSkill;
+    public GameObject rowExplosionSkill;
 
     // Start is called before the first frame update
     void Start()
     {
-        isColumnBomb = false;
-        isRowBomb = false;
+        isColumnExplosion = false;
+        isRowExplosion = false;
 
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
@@ -53,7 +53,7 @@ public class Element : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             isRowBomb = true;
-            GameObject explosion = Instantiate(rowExplosion, transform.position, Quaternion.identity);
+            GameObject explosion = Instantiate(rowExplosionSkill, transform.position, Quaternion.identity);
             explosion.transform.parent = this.transform;
         }
     }
@@ -124,14 +124,15 @@ public class Element : MonoBehaviour
                 neighborElement.GetComponent<Element>().column = column;
                 row = previousRow;
                 column = previousColumn;
-                yield return new WaitForSeconds(.2f);
+                yield return new WaitForSeconds(.3f);
+                board.currentElement = null;
                 board.currentState = GameState.move;
             }
             else
             {
                 board.DestroyMatches();
             }
-            neighborElement = null;
+            // neighborElement = null;
         }
         board.currentState = GameState.move; // board unfreeze
     }

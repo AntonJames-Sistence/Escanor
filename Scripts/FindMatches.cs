@@ -171,4 +171,34 @@ public class FindMatches : MonoBehaviour
         return elements;
     }
 
+    public void CheckExplosions()
+    {
+        // Did player move something?
+        if (board.currentElement != null)
+        {
+            // Is moved element a match?
+            if (board.currentElement.isMatched)
+            {
+                // Make it unmatched
+                board.currentElement.isMatched = false;
+                // Decide what kind of explosion skill should be generated
+                int typeOfExplosion = Random.range(0, 100);
+                if (typeOfExplosion < 50)
+                {
+                    // Make rowExplosionSkill
+                }
+                else
+                {
+                    // Make columnExplosionSkill
+                }
+            }
+            // Is neighbor element a match?
+            else if (board.currentElement.neighborElement.GetComponent<Element>().isMatched)
+            {
+
+            }
+
+        }
+    }
+
 }
