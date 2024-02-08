@@ -48,25 +48,25 @@ public class Element : MonoBehaviour
     }
 
     // Testing and debuggin purposes
-    private void OnMouseOver()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            isRowExplosion = true;
-            GameObject explosion = Instantiate(rowExplosionSkill, transform.position, Quaternion.identity);
-            explosion.transform.parent = this.transform;
-        }
-    }
+    // private void OnMouseOver()
+    // {
+    //     if (Input.GetMouseButtonDown(1))
+    //     {
+    //         isRowExplosion = true;
+    //         GameObject explosion = Instantiate(rowExplosionSkill, transform.position, Quaternion.identity);
+    //         explosion.transform.parent = this.transform;
+    //     }
+    // }
 
     // Update is called once per frame
     void Update()
     {
         // FindMatches();
 
-        if (isMatched){
-            SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
-            mySprite.color = new Color(1f, 1f, 1f, .25f);
-        }
+        // if (isMatched){
+        //     SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
+        //     mySprite.color = new Color(1f, 1f, 1f, .25f);
+        // }
 
         targetX = column;
         targetY = row;
@@ -199,5 +199,18 @@ public class Element : MonoBehaviour
         StartCoroutine(CheckMoveCo());
     }
 
-    
+    public void GenerateRowExplosionSkill()
+    {
+        isRowExplosion = true;
+        GameObject skill = Instantiate(rowExplosionSkill, transform.position, Quaternion.identity);
+        skill.transform.parent = this.transform;
+    }
+
+    public void GenerateColumnExplosionSkill()
+    {
+        isColumnExplosion = true;
+        GameObject skill = Instantiate(columnExplosionSkill, transform.position, Quaternion.identity);
+        skill.transform.parent = this.transform;
+    }
+
 }

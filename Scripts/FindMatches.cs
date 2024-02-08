@@ -41,22 +41,22 @@ public class FindMatches : MonoBehaviour
                             if (leftElement.tag == currentElement.tag && rightElement.tag == currentElement.tag)
                             {
                                 // Logic for row explosion when horizontal match
-                                if (currentElement.GetComponent<Element>().isRowBomb
-                                    || leftElement.GetComponent<Element>().isRowBomb
-                                    || rightElement.GetComponent<Element>().isRowBomb)
+                                if (currentElement.GetComponent<Element>().isRowExplosion
+                                    || leftElement.GetComponent<Element>().isRowExplosion
+                                    || rightElement.GetComponent<Element>().isRowExplosion)
                                 {
                                     currentMatches.Union(GetRowElements(j));
                                 }
                                 // Logic for column explosion when there's vertical match
-                                if (currentElement.GetComponent<Element>().isColumnBomb)
+                                if (currentElement.GetComponent<Element>().isColumnExplosion)
                                 {
                                     currentMatches.Union(GetColumnElements(i)); // Center piece
                                 }
-                                if (leftElement.GetComponent<Element>().isColumnBomb)
+                                if (leftElement.GetComponent<Element>().isColumnExplosion)
                                 {
                                     currentMatches.Union(GetColumnElements(i - 1)); // Left piece
                                 }
-                                if (rightElement.GetComponent<Element>().isColumnBomb)
+                                if (rightElement.GetComponent<Element>().isColumnExplosion)
                                 {
                                     currentMatches.Union(GetColumnElements(i + 1)); // Right piece
                                 }
@@ -92,22 +92,22 @@ public class FindMatches : MonoBehaviour
                             if (upElement.tag == currentElement.tag && downElement.tag == currentElement.tag)
                             {
                                 // Check for column explosion
-                                if (currentElement.GetComponent<Element>().isColumnBomb
-                                    || upElement.GetComponent<Element>().isColumnBomb
-                                    || downElement.GetComponent<Element>().isColumnBomb)
+                                if (currentElement.GetComponent<Element>().isColumnExplosion
+                                    || upElement.GetComponent<Element>().isColumnExplosion
+                                    || downElement.GetComponent<Element>().isColumnExplosion)
                                 {
                                     currentMatches.Union(GetColumnElements(i));
                                 }
                                 // Logic for row explosion when there's horizontal match
-                                if (currentElement.GetComponent<Element>().isRowBomb)
+                                if (currentElement.GetComponent<Element>().isRowExplosion)
                                 {
                                     currentMatches.Union(GetRowElements(j)); // Center piece
                                 }
-                                if (upElement.GetComponent<Element>().isRowBomb)
+                                if (upElement.GetComponent<Element>().isRowExplosion)
                                 {
                                     currentMatches.Union(GetRowElements(j + 1)); // Left piece
                                 }
-                                if (downElement.GetComponent<Element>().isRowBomb)
+                                if (downElement.GetComponent<Element>().isRowExplosion)
                                 {
                                     currentMatches.Union(GetRowElements(j - 1)); // Right piece
                                 }
@@ -182,14 +182,16 @@ public class FindMatches : MonoBehaviour
                 // Make it unmatched
                 board.currentElement.isMatched = false;
                 // Decide what kind of explosion skill should be generated
-                int typeOfExplosion = Random.range(0, 100);
+                int typeOfExplosion = Random.Range(0, 100);
                 if (typeOfExplosion < 50)
                 {
                     // Make rowExplosionSkill
+                    board.currentElement.GenerateRowExplosionSkill();
                 }
                 else
                 {
                     // Make columnExplosionSkill
+                    board.currentElement.GenerateColumnExplosionSkill();
                 }
             }
             // Is neighbor element a match?
