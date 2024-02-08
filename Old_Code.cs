@@ -28,3 +28,21 @@
 //         }
 //     }
 // }
+
+// Testing and debuggin purposes
+// private void OnMouseOver()
+// {
+//     if (Input.GetMouseButtonDown(1))
+//     {
+//         isRowExplosion = true;
+//         GameObject explosion = Instantiate(rowExplosionSkill, transform.position, Quaternion.identity);
+//         explosion.transform.parent = this.transform;
+//     }
+// }
+
+// FindMatches();
+
+// if (isMatched){
+//     SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
+//     mySprite.color = new Color(1f, 1f, 1f, .25f);
+// }

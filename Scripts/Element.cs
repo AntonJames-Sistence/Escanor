@@ -47,27 +47,9 @@ public class Element : MonoBehaviour
         // previousColumn = column;
     }
 
-    // Testing and debuggin purposes
-    // private void OnMouseOver()
-    // {
-    //     if (Input.GetMouseButtonDown(1))
-    //     {
-    //         isRowExplosion = true;
-    //         GameObject explosion = Instantiate(rowExplosionSkill, transform.position, Quaternion.identity);
-    //         explosion.transform.parent = this.transform;
-    //     }
-    // }
-
     // Update is called once per frame
     void Update()
     {
-        // FindMatches();
-
-        // if (isMatched){
-        //     SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
-        //     mySprite.color = new Color(1f, 1f, 1f, .25f);
-        // }
-
         targetX = column;
         targetY = row;
         // Moving logic for left & right
@@ -113,7 +95,6 @@ public class Element : MonoBehaviour
 
     public IEnumerator CheckMoveCo() 
     {
-        board.currentState = GameState.wait; // board freeze state
         yield return new WaitForSeconds(.3f);
 
         if (neighborElement != null)
@@ -134,7 +115,6 @@ public class Element : MonoBehaviour
             }
             // neighborElement = null;
         }
-        board.currentState = GameState.move; // board unfreeze
     }
 
     private void OnMouseDown()
@@ -151,6 +131,13 @@ public class Element : MonoBehaviour
         {
             lastTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             CalculateAngle();
+            // Freeze interaction state
+            board.currentState = GameState.wait; 
+        }
+        else
+        {
+            // Unfreeze interaction state
+            board.currentState = GameState.move; 
         }
     }
 
