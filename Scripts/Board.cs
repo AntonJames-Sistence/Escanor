@@ -212,10 +212,12 @@ public class Board : MonoBehaviour
 
         while (MatchesOnBoard())
         {
-            yield return new WaitForSeconds(.3f);
+            yield return new WaitForSeconds(.5f);
             DestroyMatches();
         }
 
+        // Clear list of matches to avoid false matches
+        findMatches.currentMatches.Clear();
         yield return new WaitForSeconds(.5f);
         currentState = GameState.move;
     }

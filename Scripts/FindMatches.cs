@@ -195,7 +195,7 @@ public class FindMatches : MonoBehaviour
                 }
             }
             // Is neighbor element a match?
-            else if (board.currentElement.neighborElement.GetComponent<Element>().isMatched)
+            else if (board.currentElement.neighborElement != null)
             {
 
             }
