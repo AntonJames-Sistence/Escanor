@@ -145,7 +145,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   column: 0
   row: 0
+  previousColumn: 0
+  previousRow: 0
   targetX: 0
   targetY: 0
   isMatched: 0
+  neighborElement: {fileID: 0}
   swipeAngle: 0
+  swipeResistance: 0.7
+  isColumnExplosion: 0
+  isRowExplosion: 0
+  columnExplosionSkill: {fileID: 1574239613560337041, guid: 2ca7bcd7c77f54dc981966a61236f94c, type: 3}
+  rowExplosionSkill: {fileID: 6926873629373241047, guid: cd9eddc7e95f74443ac27ed21d34fd04, type: 3}

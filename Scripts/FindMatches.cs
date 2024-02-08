@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class FindMatches : MonoBehaviour
 {
@@ -39,6 +40,27 @@ public class FindMatches : MonoBehaviour
                         {
                             if (leftElement.tag == currentElement.tag && rightElement.tag == currentElement.tag)
                             {
+                                // Logic for row explosion when horizontal match
+                                if (currentElement.GetComponent<Element>().isRowExplosion
+                                    || leftElement.GetComponent<Element>().isRowExplosion
+                                    || rightElement.GetComponent<Element>().isRowExplosion)
+                                {
+                                    currentMatches.Union(GetRowElements(j));
+                                }
+                                // Logic for column explosion when there's vertical match
+                                if (currentElement.GetComponent<Element>().isColumnExplosion)
+                                {
+                                    currentMatches.Union(GetColumnElements(i)); // Center piece
+                                }
+                                if (leftElement.GetComponent<Element>().isColumnExplosion)
+                                {
+                                    currentMatches.Union(GetColumnElements(i - 1)); // Left piece
+                                }
+                                if (rightElement.GetComponent<Element>().isColumnExplosion)
+                                {
+                                    currentMatches.Union(GetColumnElements(i + 1)); // Right piece
+                                }
+
                                 if (!currentMatches.Contains(leftElement))
                                 {
                                     currentMatches.Add(leftElement);
@@ -69,6 +91,27 @@ public class FindMatches : MonoBehaviour
                         {
                             if (upElement.tag == currentElement.tag && downElement.tag == currentElement.tag)
                             {
+                                // Check for column explosion
+                                if (currentElement.GetComponent<Element>().isColumnExplosion
+                                    || upElement.GetComponent<Element>().isColumnExplosion
+                                    || downElement.GetComponent<Element>().isColumnExplosion)
+                                {
+                                    currentMatches.Union(GetColumnElements(i));
+                                }
+                                // Logic for row explosion when there's horizontal match
+                                if (currentElement.GetComponent<Element>().isRowExplosion)
+                                {
+                                    currentMatches.Union(GetRowElements(j)); // Center piece
+                                }
+                                if (upElement.GetComponent<Element>().isRowExplosion)
+                                {
+                                    currentMatches.Union(GetRowElements(j + 1)); // Left piece
+                                }
+                                if (downElement.GetComponent<Element>().isRowExplosion)
+                                {
+                                    currentMatches.Union(GetRowElements(j - 1)); // Right piece
+                                }
+
                                 if (!currentMatches.Contains(upElement))
                                 {
                                     currentMatches.Add(upElement);
@@ -91,6 +134,72 @@ public class FindMatches : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    // Helper function to grab board column Elements
+    List<GameObject> GetColumnElements(int column)
+    {
+        List<GameObject> elements = new List<GameObject>();
+
+        for (int i = 0; i < board.height; i++)
+        {
+            if (board.allElements[column, i] != null)
+            {
+                elements.Add(board.allElements[column, i]);
+                board.allElements[column, i].GetComponent<Element>().isMatched = true;
+            }
+        }
+
+        return elements;
+    }
+    
+    // Helper function to grab board row Elements
+    List<GameObject> GetRowElements(int row)
+    {
+        List<GameObject> elements = new List<GameObject>();
+
+        for (int i = 0; i < board.width; i++)
+        {
+            if (board.allElements[i, row] != null)
+            {
+                elements.Add(board.allElements[i, row]);
+                board.allElements[i, row].GetComponent<Element>().isMatched = true;
+            }
+        }
+
+        return elements;
+    }
+
+    public void CheckSkills()
+    {
+        // Did player move something?
+        if (board.currentElement != null)
+        {
+            // Is moved element a match?
+            if (board.currentElement.isMatched)
+            {
+                // Make it unmatched
+                board.currentElement.isMatched = false;
+                // Decide what kind of explosion skill should be generated
+                int typeOfExplosion = Random.Range(0, 100);
+                if (typeOfExplosion < 50)
+                {
+                    // Make rowExplosionSkill
+                    board.currentElement.GenerateRowExplosionSkill();
+                }
+                else
+                {
+                    // Make columnExplosionSkill
+                    board.currentElement.GenerateColumnExplosionSkill();
+                }
+            }
+            // Is neighbor element a match?
+            else if (board.currentElement.neighborElement.GetComponent<Element>().isMatched)
+            {
+
+            }
+
         }
     }
 

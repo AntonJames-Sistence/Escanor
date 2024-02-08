@@ -12,20 +12,31 @@ public class Element : MonoBehaviour
     public int targetX;
     public int targetY;
     public bool isMatched = false;
+    public GameObject neighborElement;
 
 
     private FindMatches findMatches;
     private Board board;
-    private GameObject neighborElement;
     private Vector2 firstTouchPosition;
     private Vector2 lastTouchPosition;
     private Vector2 tempPosition;
+
+    [Header("Swipe Variables")]
     public float swipeAngle;
     public float swipeResistance = .7f;
+
+    [Header("Powerup Variables")]
+    public bool isColumnExplosion;
+    public bool isRowExplosion;
+    public GameObject columnExplosionSkill;
+    public GameObject rowExplosionSkill;
 
     // Start is called before the first frame update
     void Start()
     {
+        isColumnExplosion = false;
+        isRowExplosion = false;
+
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
         // targetX = (int)transform.position.x;
@@ -36,15 +47,26 @@ public class Element : MonoBehaviour
         // previousColumn = column;
     }
 
+    // Testing and debuggin purposes
+    // private void OnMouseOver()
+    // {
+    //     if (Input.GetMouseButtonDown(1))
+    //     {
+    //         isRowExplosion = true;
+    //         GameObject explosion = Instantiate(rowExplosionSkill, transform.position, Quaternion.identity);
+    //         explosion.transform.parent = this.transform;
+    //     }
+    // }
+
     // Update is called once per frame
     void Update()
     {
         // FindMatches();
 
-        if (isMatched){
-            SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
-            mySprite.color = new Color(1f, 1f, 1f, .25f);
-        }
+        // if (isMatched){
+        //     SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
+        //     mySprite.color = new Color(1f, 1f, 1f, .25f);
+        // }
 
         targetX = column;
         targetY = row;
@@ -53,7 +75,7 @@ public class Element : MonoBehaviour
         { 
             // Move towards the target
             tempPosition = new Vector2(targetX, transform.position.y);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .3f);
             if (board.allElements[column, row] != this.gameObject)
             {
                 board.allElements[column, row] = this.gameObject;
@@ -73,7 +95,7 @@ public class Element : MonoBehaviour
         { 
             // Move towards the target
             tempPosition = new Vector2(transform.position.x, targetY);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .3f);
             if (board.allElements[column, row] != this.gameObject)
             {
                 board.allElements[column, row] = this.gameObject;
@@ -91,7 +113,8 @@ public class Element : MonoBehaviour
 
     public IEnumerator CheckMoveCo() 
     {
-        yield return new WaitForSeconds(.5f);
+        board.currentState = GameState.wait; // board freeze state
+        yield return new WaitForSeconds(.3f);
 
         if (neighborElement != null)
         {
@@ -101,15 +124,17 @@ public class Element : MonoBehaviour
                 neighborElement.GetComponent<Element>().column = column;
                 row = previousRow;
                 column = previousColumn;
-                yield return new WaitForSeconds(.5f);
+                yield return new WaitForSeconds(.3f);
+                board.currentElement = null;
                 board.currentState = GameState.move;
             }
             else
             {
                 board.DestroyMatches();
             }
-            neighborElement = null;
-        } 
+            // neighborElement = null;
+        }
+        board.currentState = GameState.move; // board unfreeze
     }
 
     private void OnMouseDown()
@@ -136,11 +161,7 @@ public class Element : MonoBehaviour
         {
             swipeAngle = Mathf.Atan2(lastTouchPosition.y - firstTouchPosition.y, lastTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
             SwapElements();
-            board.currentState = GameState.wait;
-        }
-        else
-        {
-            board.currentState = GameState.move;
+            board.currentElement = this;
         }
     }
 
@@ -178,34 +199,18 @@ public class Element : MonoBehaviour
         StartCoroutine(CheckMoveCo());
     }
 
-    // void FindMatches()
-    // {
-    //     if (column > 0 && column < board.width - 1){
-    //         GameObject leftElement1 = board.allElements[column - 1, row];
-    //         GameObject rightElement1 = board.allElements[column + 1, row];
+    public void GenerateRowExplosionSkill()
+    {
+        isRowExplosion = true;
+        GameObject skill = Instantiate(rowExplosionSkill, transform.position, Quaternion.identity);
+        skill.transform.parent = this.transform;
+    }
 
-    //         if (leftElement1 != null && rightElement1 != null)
-    //         {
-    //             if (leftElement1.tag == this.gameObject.tag && rightElement1.tag == this.gameObject.tag){
-    //                 leftElement1.GetComponent<Element>().isMatched = true;
-    //                 rightElement1.GetComponent<Element>().isMatched = true;
-    //                 isMatched = true;
-    //             }
-    //         }
-    //     }
+    public void GenerateColumnExplosionSkill()
+    {
+        isColumnExplosion = true;
+        GameObject skill = Instantiate(columnExplosionSkill, transform.position, Quaternion.identity);
+        skill.transform.parent = this.transform;
+    }
 
-    //     if (row > 0 && row < board.height - 1){
-    //         GameObject upElement1 = board.allElements[column, row + 1];
-    //         GameObject downElement1 = board.allElements[column, row - 1];
-
-    //         if (upElement1 != null && downElement1 != null)
-    //         {
-    //             if (upElement1.tag == this.gameObject.tag && downElement1.tag == this.gameObject.tag){
-    //                 upElement1.GetComponent<Element>().isMatched = true;
-    //                 downElement1.GetComponent<Element>().isMatched = true;
-    //                 isMatched = true;
-    //             }
-    //         }
-    //     }
-    // }
 }
