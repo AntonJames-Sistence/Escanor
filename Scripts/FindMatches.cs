@@ -171,7 +171,7 @@ public class FindMatches : MonoBehaviour
         return elements;
     }
 
-    public void CheckExplosions()
+    public void CheckSkills()
     {
         // Did player move something?
         if (board.currentElement != null)
