@@ -160,6 +160,7 @@ public class Element : MonoBehaviour
         {
             swipeAngle = Mathf.Atan2(lastTouchPosition.y - firstTouchPosition.y, lastTouchPosition.x - firstTouchPosition.x) * 180 / Mathf.PI;
             SwapElements();
+            board.currentElement = this;
         }
     }
 

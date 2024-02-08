@@ -18,6 +18,7 @@ public class Board : MonoBehaviour
     public GameObject[] elements;
     public GameObject[,] allElements;
     public GameObject destroyEffect;
+    public Element currentElement;
 
     private BackgroundTile[,] allTiles;
     private FindMatches findMatches;
