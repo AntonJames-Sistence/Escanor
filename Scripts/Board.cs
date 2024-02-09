@@ -218,6 +218,8 @@ public class Board : MonoBehaviour
 
         // Clear list of matches to avoid false matches
         findMatches.currentMatches.Clear();
+        // Clear currentElement to avoid bugs
+        currentElement = null;
         yield return new WaitForSeconds(.5f);
         currentState = GameState.move;
     }

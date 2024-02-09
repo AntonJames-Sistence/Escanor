@@ -197,7 +197,26 @@ public class FindMatches : MonoBehaviour
             // Is neighbor element a match?
             else if (board.currentElement.neighborElement != null)
             {
-
+                // Grab the neighbor element
+                Element neighborElement = board.currentElement.neighborElement.GetComponent<Element>();
+                // Is neighbor element a match?
+                if (neighborElement.isMatched)
+                {
+                    // Unmatch neighbor element
+                    neighborElement.isMatched = false;
+                    // Decide what kind of bomb to make
+                    int typeOfExplosion = Random.Range(0, 100);
+                    if (typeOfExplosion < 50)
+                    {
+                        // Make rowExplosionSkill
+                        neighborElement.GenerateRowExplosionSkill();
+                    }
+                    else
+                    {
+                        // Make columnExplosionSkill
+                        neighborElement.GenerateColumnExplosionSkill();
+                    }
+                    }
             }
 
         }
