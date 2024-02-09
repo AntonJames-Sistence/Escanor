@@ -182,15 +182,15 @@ public class FindMatches : MonoBehaviour
                 // Make it unmatched
                 board.currentElement.isMatched = false;
                 // Decide what kind of explosion skill should be generated
-                int typeOfExplosion = Random.Range(0, 100);
-                if (typeOfExplosion < 50)
+                if ((board.currentElement.swipeAngle > -45 && board.currentElement.swipeAngle <= 45)
+                || (board.currentElement.swipeAngle < -135 || board.currentElement.swipeAngle >= 135))
                 {
-                    // Make rowExplosionSkill
+                    // If left/right swipe, generate rowExplosionSkill
                     board.currentElement.GenerateRowExplosionSkill();
                 }
                 else
                 {
-                    // Make columnExplosionSkill
+                    // Else up/down swipe, generate columnExplosionSkill
                     board.currentElement.GenerateColumnExplosionSkill();
                 }
             }
@@ -204,19 +204,19 @@ public class FindMatches : MonoBehaviour
                 {
                     // Unmatch neighbor element
                     neighborElement.isMatched = false;
-                    // Decide what kind of bomb to make
-                    int typeOfExplosion = Random.Range(0, 100);
-                    if (typeOfExplosion < 50)
+                    // Decide what kind of explosion skill should be generated
+                    if ((board.currentElement.swipeAngle > -45 && board.currentElement.swipeAngle <= 45)
+                    || (board.currentElement.swipeAngle < -135 || board.currentElement.swipeAngle >= 135))
                     {
-                        // Make rowExplosionSkill
+                        // If left/right swipe, generate rowExplosionSkill
                         neighborElement.GenerateRowExplosionSkill();
                     }
                     else
                     {
-                        // Make columnExplosionSkill
+                        // Else up/down swipe, generate columnExplosionSkill
                         neighborElement.GenerateColumnExplosionSkill();
                     }
-                    }
+                }
             }
 
         }

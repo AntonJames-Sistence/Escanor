@@ -146,6 +146,8 @@ public class Board : MonoBehaviour
 
     private IEnumerator DecreaseRowCo()
     {
+        yield return new WaitForSeconds(.5f);
+
         int nullCount = 0;
         for (int i = 0; i < width; i++)
         {
@@ -208,7 +210,6 @@ public class Board : MonoBehaviour
     private IEnumerator FillBoardCo()
     {
         RefillBoard();
-        yield return new WaitForSeconds(.5f);
 
         while (MatchesOnBoard())
         {
