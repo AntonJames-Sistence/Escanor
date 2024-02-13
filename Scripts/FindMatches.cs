@@ -137,6 +137,22 @@ public class FindMatches : MonoBehaviour
         }
     }
 
+    // Get all Elements same type
+    public void MatchAllSameElements(string type)
+    {
+        for (int i = 0; i < board.width; i++)
+        {
+            for (int j = 0; j < board.height; j++)
+            {
+                // Check if piece exists in board
+                if (board.allElements[i, j] != null)
+                {
+                    if (board.allElements)
+                }
+            }
+        }
+    }
+
     // Helper function to grab board column Elements
     List<GameObject> GetColumnElements(int column)
     {

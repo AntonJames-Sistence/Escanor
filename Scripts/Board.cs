@@ -184,6 +184,7 @@ public class Board : MonoBehaviour
                     allElements[i, j] = piece;
                     piece.GetComponent<Element>().row = j;
                     piece.GetComponent<Element>().column = i;
+
                 }
             }
         }
@@ -210,6 +211,7 @@ public class Board : MonoBehaviour
     private IEnumerator FillBoardCo()
     {
         RefillBoard();
+        yield return new WaitForSeconds(.3f);
 
         while (MatchesOnBoard())
         {
