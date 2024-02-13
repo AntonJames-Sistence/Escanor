@@ -46,3 +46,28 @@
 //     SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
 //     mySprite.color = new Color(1f, 1f, 1f, .25f);
 // }
+
+// int typeOfExplosion = Random.Range(0, 100);
+// if (typeOfExplosion < 50)
+// {
+//     // Make rowExplosionSkill
+//     board.currentElement.GenerateRowExplosionSkill();
+// }
+// else
+// {
+//     // Make columnExplosionSkill
+//     board.currentElement.GenerateColumnExplosionSkill();
+// }
+
+// int typeOfExplosion = Random.Range(0, 100);
+// if (typeOfExplosion < 50)
+// {
+//     // Make rowExplosionSkill
+//     neighborElement.GenerateRowExplosionSkill();
+// }
+// else
+// {
+//     // Make columnExplosionSkill
+//     neighborElement.GenerateColumnExplosionSkill();
+// }
+// }

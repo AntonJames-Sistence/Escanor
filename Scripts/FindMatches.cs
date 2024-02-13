@@ -137,6 +137,27 @@ public class FindMatches : MonoBehaviour
         }
     }
 
+    // Get all Elements same type
+    public void MatchAllSameElements(string elementsType)
+    {
+        for (int i = 0; i < board.width; i++)
+        {
+            for (int j = 0; j < board.height; j++)
+            {
+                // Check if piece exists in board
+                if (board.allElements[i, j] != null)
+                {
+                    // Check tag of the Element
+                    if (board.allElements[i, j].tag == elementsType)
+                    {
+                        // Set this Element to be matched
+                        board.allElements[i, j].GetComponent<Element>().isMatched = true;
+                    }
+                }
+            }
+        }
+    }
+
     // Helper function to grab board column Elements
     List<GameObject> GetColumnElements(int column)
     {
@@ -182,22 +203,41 @@ public class FindMatches : MonoBehaviour
                 // Make it unmatched
                 board.currentElement.isMatched = false;
                 // Decide what kind of explosion skill should be generated
-                int typeOfExplosion = Random.Range(0, 100);
-                if (typeOfExplosion < 50)
+                if ((board.currentElement.swipeAngle > -45 && board.currentElement.swipeAngle <= 45)
+                || (board.currentElement.swipeAngle < -135 || board.currentElement.swipeAngle >= 135))
                 {
-                    // Make rowExplosionSkill
+                    // If left/right swipe, generate rowExplosionSkill
                     board.currentElement.GenerateRowExplosionSkill();
                 }
                 else
                 {
-                    // Make columnExplosionSkill
+                    // Else up/down swipe, generate columnExplosionSkill
                     board.currentElement.GenerateColumnExplosionSkill();
                 }
             }
             // Is neighbor element a match?
             else if (board.currentElement.neighborElement != null)
             {
-
+                // Grab the neighbor element
+                Element neighborElement = board.currentElement.neighborElement.GetComponent<Element>();
+                // Is neighbor element a match?
+                if (neighborElement.isMatched)
+                {
+                    // Unmatch neighbor element
+                    neighborElement.isMatched = false;
+                    // Decide what kind of explosion skill should be generated
+                    if ((board.currentElement.swipeAngle > -45 && board.currentElement.swipeAngle <= 45)
+                    || (board.currentElement.swipeAngle < -135 || board.currentElement.swipeAngle >= 135))
+                    {
+                        // If left/right swipe, generate rowExplosionSkill
+                        neighborElement.GenerateRowExplosionSkill();
+                    }
+                    else
+                    {
+                        // Else up/down swipe, generate columnExplosionSkill
+                        neighborElement.GenerateColumnExplosionSkill();
+                    }
+                }
             }
 
         }

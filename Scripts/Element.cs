@@ -26,10 +26,12 @@ public class Element : MonoBehaviour
     public float swipeResistance = .7f;
 
     [Header("Powerup Variables")]
+    public bool isSameElementExplosion;
     public bool isColumnExplosion;
     public bool isRowExplosion;
     public GameObject columnExplosionSkill;
     public GameObject rowExplosionSkill;
+    public GameObject sameElementExplosionSkill;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +47,17 @@ public class Element : MonoBehaviour
         // column = targetX;
         // previousRow = row;
         // previousColumn = column;
+    }
+
+    // Testing and debuggin purposes
+    private void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            isSameElementExplosion = true;
+            GameObject explosion = Instantiate(sameElementExplosionSkill, transform.position, Quaternion.identity);
+            explosion.transform.parent = this.transform;
+        }
     }
 
     // Update is called once per frame
@@ -95,7 +108,20 @@ public class Element : MonoBehaviour
 
     public IEnumerator CheckMoveCo() 
     {
-        yield return new WaitForSeconds(.3f);
+        if (isSameElementExplosion)
+        {
+            // This piece is "Same Element Explosion" and the swapping element is the element to destroy
+            findMatches.MatchAllSameElements(neighborElement.tag);
+            isMatched = true;
+        }
+        else if (neighborElement.GetComponent<Element>().isSameElementExplosion)
+        {
+            // The swapping element is "Same Element Explosion" and this element is the element to destroy
+            findMatches.MatchAllSameElements(this.gameObject.tag);
+            neighborElement.GetComponent<Element>().isMatched = true;
+        }
+
+        yield return new WaitForSeconds(.5f);
 
         if (neighborElement != null)
         {

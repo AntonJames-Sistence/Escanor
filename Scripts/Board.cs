@@ -146,6 +146,8 @@ public class Board : MonoBehaviour
 
     private IEnumerator DecreaseRowCo()
     {
+        yield return new WaitForSeconds(.5f);
+
         int nullCount = 0;
         for (int i = 0; i < width; i++)
         {
@@ -182,6 +184,7 @@ public class Board : MonoBehaviour
                     allElements[i, j] = piece;
                     piece.GetComponent<Element>().row = j;
                     piece.GetComponent<Element>().column = i;
+
                 }
             }
         }
@@ -208,7 +211,7 @@ public class Board : MonoBehaviour
     private IEnumerator FillBoardCo()
     {
         RefillBoard();
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.3f);
 
         while (MatchesOnBoard())
         {
@@ -218,6 +221,8 @@ public class Board : MonoBehaviour
 
         // Clear list of matches to avoid false matches
         findMatches.currentMatches.Clear();
+        // Clear currentElement to avoid bugs
+        currentElement = null;
         yield return new WaitForSeconds(.5f);
         currentState = GameState.move;
     }

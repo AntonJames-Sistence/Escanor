@@ -153,7 +153,9 @@ MonoBehaviour:
   neighborElement: {fileID: 0}
   swipeAngle: 0
   swipeResistance: 0.7
+  isSameElementExplosion: 0
   isColumnExplosion: 0
   isRowExplosion: 0
   columnExplosionSkill: {fileID: 1574239613560337041, guid: 2ca7bcd7c77f54dc981966a61236f94c, type: 3}
   rowExplosionSkill: {fileID: 6926873629373241047, guid: cd9eddc7e95f74443ac27ed21d34fd04, type: 3}
+  sameElementExplosionSkill: {fileID: 9093610210540952283, guid: 765e0e3e4f57c452a91ae5e9a34e52cd, type: 3}
