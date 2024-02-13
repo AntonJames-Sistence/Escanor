@@ -138,7 +138,7 @@ public class FindMatches : MonoBehaviour
     }
 
     // Get all Elements same type
-    public void MatchAllSameElements(string type)
+    public void MatchAllSameElements(string elementsType)
     {
         for (int i = 0; i < board.width; i++)
         {
@@ -147,7 +147,12 @@ public class FindMatches : MonoBehaviour
                 // Check if piece exists in board
                 if (board.allElements[i, j] != null)
                 {
-                    if (board.allElements)
+                    // Check tag of the Element
+                    if (board.allElements[i, j].tag == elementsType)
+                    {
+                        // Set this Element to be matched
+                        board.allElements[i, j].GetComponent<Element>().isMatched = true;
+                    }
                 }
             }
         }
