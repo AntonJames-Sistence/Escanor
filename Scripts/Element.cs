@@ -118,10 +118,10 @@ public class Element : MonoBehaviour
         {
             // The swapping element is "Same Element Explosion" and this element is the element to destroy
             findMatches.MatchAllSameElements(this.gameObject.tag);
-            isMatched = true;
+            neighborElement.GetComponent<Element>().isMatched = true;
         }
 
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.5f);
 
         if (neighborElement != null)
         {
