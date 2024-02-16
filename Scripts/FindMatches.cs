@@ -61,6 +61,22 @@ public class FindMatches : MonoBehaviour
         return currentElements;
     }
 
+    private void AddToListAndMatch(GameObject element)
+    {
+        if (!currentMatches.Contains(element))
+        {
+            currentMatches.Add(element);
+        }
+        element.GetComponent<Element>().isMatched = true;
+    }
+
+    private void GetNearbyElements(GameObject element1, GameObject element2, GameObject element3)
+    {
+        AddToListAndMatch(element1);
+        AddToListAndMatch(element2);
+        AddToListAndMatch(element3);
+    }
+
     private IEnumerator FindMatchesCo()
     {
         yield return new WaitForSeconds(.2f);
@@ -91,23 +107,7 @@ public class FindMatches : MonoBehaviour
                                 // Logic for column explosion when there's vertical match
                                 currentMatches.Union(IsColumnExplosion(simplifiedLeftElement, simplifiedCurrentElement, simplifiedRightElement));
 
-                                if (!currentMatches.Contains(leftElement))
-                                {
-                                    currentMatches.Add(leftElement);
-                                }
-                                leftElement.GetComponent<Element>().isMatched = true;
-
-                                if (!currentMatches.Contains(rightElement))
-                                {
-                                    currentMatches.Add(rightElement);
-                                }
-                                rightElement.GetComponent<Element>().isMatched = true;
-
-                                if (!currentMatches.Contains(currentElement))
-                                {
-                                    currentMatches.Add(currentElement);
-                                }
-                                currentElement.GetComponent<Element>().isMatched = true;
+                                GetNearbyElements(leftElement, currentElement, rightElement);
                             }
                         }
                     }

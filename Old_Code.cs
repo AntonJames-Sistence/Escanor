@@ -109,3 +109,21 @@
                                 // {
                                 //     currentMatches.Union(GetColumnElements(i));
                                 // }
+
+                                // if (!currentMatches.Contains(leftElement))
+                                // {
+                                //     currentMatches.Add(leftElement);
+                                // }
+                                // leftElement.GetComponent<Element>().isMatched = true;
+
+                                // if (!currentMatches.Contains(rightElement))
+                                // {
+                                //     currentMatches.Add(rightElement);
+                                // }
+                                // rightElement.GetComponent<Element>().isMatched = true;
+
+                                // if (!currentMatches.Contains(currentElement))
+                                // {
+                                //     currentMatches.Add(currentElement);
+                                // }
+                                // currentElement.GetComponent<Element>().isMatched = true;
