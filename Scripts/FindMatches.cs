@@ -19,65 +19,95 @@ public class FindMatches : MonoBehaviour
         StartCoroutine(FindMatchesCo());
     }
 
+    private List<GameObject> IsRowExplosion(Element element1, Element element2, Element element3)
+    {
+        // Create list of current elements
+        List<GameObject> currentElements = new List<GameObject>();
+
+        if (element1.isRowExplosion)
+        {
+            currentMatches.Union(GetRowElements(element1.row));
+        }
+        if (element2.isRowExplosion)
+        {
+            currentMatches.Union(GetRowElements(element2.row));
+        }
+        if (element3.isRowExplosion)
+        {
+            currentMatches.Union(GetRowElements(element3.row));
+        }
+
+        return currentElements;
+    }
+
+    private List<GameObject> IsColumnExplosion(Element element1, Element element2, Element element3)
+    {
+        // Create list of current elements
+        List<GameObject> currentElements = new List<GameObject>();
+
+        if (element1.isColumnExplosion)
+        {
+            currentMatches.Union(GetColumnElements(element1.column));
+        }
+        if (element2.isColumnExplosion)
+        {
+            currentMatches.Union(GetColumnElements(element2.column));
+        }
+        if (element3.isColumnExplosion)
+        {
+            currentMatches.Union(GetColumnElements(element3.column));
+        }
+
+        return currentElements;
+    }
+
+    private void AddToListAndMatch(GameObject element)
+    {
+        if (!currentMatches.Contains(element))
+        {
+            currentMatches.Add(element);
+        }
+        element.GetComponent<Element>().isMatched = true;
+    }
+
+    private void GetNearbyElements(GameObject element1, GameObject element2, GameObject element3)
+    {
+        AddToListAndMatch(element1);
+        AddToListAndMatch(element2);
+        AddToListAndMatch(element3);
+    }
+
     private IEnumerator FindMatchesCo()
     {
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(.4f);
 
         for (int i = 0; i < board.width; i++)
         {
             for (int j = 0; j < board.height; j++)
             {
                 GameObject currentElement = board.allElements[i, j];
+                Element simplifiedCurrentElement = currentElement.GetComponent<Element>();
 
                 if (currentElement != null)
                 {
                     if (i > 0 && i < board.width - 1)
                     {
                         GameObject leftElement = board.allElements[i - 1, j];
+                        Element simplifiedLeftElement = leftElement.GetComponent<Element>();
                         GameObject rightElement = board.allElements[i + 1, j];
+                        Element simplifiedRightElement = rightElement.GetComponent<Element>();
 
                         if (leftElement && rightElement)
                         {
                             if (leftElement.tag == currentElement.tag && rightElement.tag == currentElement.tag)
                             {
                                 // Logic for row explosion when horizontal match
-                                if (currentElement.GetComponent<Element>().isRowExplosion
-                                    || leftElement.GetComponent<Element>().isRowExplosion
-                                    || rightElement.GetComponent<Element>().isRowExplosion)
-                                {
-                                    currentMatches.Union(GetRowElements(j));
-                                }
+                                currentMatches.Union(IsRowExplosion(simplifiedLeftElement, simplifiedCurrentElement, simplifiedRightElement));
+
                                 // Logic for column explosion when there's vertical match
-                                if (currentElement.GetComponent<Element>().isColumnExplosion)
-                                {
-                                    currentMatches.Union(GetColumnElements(i)); // Center piece
-                                }
-                                if (leftElement.GetComponent<Element>().isColumnExplosion)
-                                {
-                                    currentMatches.Union(GetColumnElements(i - 1)); // Left piece
-                                }
-                                if (rightElement.GetComponent<Element>().isColumnExplosion)
-                                {
-                                    currentMatches.Union(GetColumnElements(i + 1)); // Right piece
-                                }
+                                currentMatches.Union(IsColumnExplosion(simplifiedLeftElement, simplifiedCurrentElement, simplifiedRightElement));
 
-                                if (!currentMatches.Contains(leftElement))
-                                {
-                                    currentMatches.Add(leftElement);
-                                }
-                                leftElement.GetComponent<Element>().isMatched = true;
-
-                                if (!currentMatches.Contains(rightElement))
-                                {
-                                    currentMatches.Add(rightElement);
-                                }
-                                rightElement.GetComponent<Element>().isMatched = true;
-
-                                if (!currentMatches.Contains(currentElement))
-                                {
-                                    currentMatches.Add(currentElement);
-                                }
-                                currentElement.GetComponent<Element>().isMatched = true;
+                                GetNearbyElements(leftElement, currentElement, rightElement);
                             }
                         }
                     }
@@ -85,50 +115,21 @@ public class FindMatches : MonoBehaviour
                     if (j > 0 && j < board.height - 1)
                     {
                         GameObject upElement = board.allElements[i, j + 1];
+                        Element simplifiedUpElement = upElement.GetComponent<Element>();
                         GameObject downElement = board.allElements[i, j - 1];
+                        Element simplifiedDownElement = downElement.GetComponent<Element>();
 
                         if (upElement && downElement)
                         {
                             if (upElement.tag == currentElement.tag && downElement.tag == currentElement.tag)
                             {
                                 // Check for column explosion
-                                if (currentElement.GetComponent<Element>().isColumnExplosion
-                                    || upElement.GetComponent<Element>().isColumnExplosion
-                                    || downElement.GetComponent<Element>().isColumnExplosion)
-                                {
-                                    currentMatches.Union(GetColumnElements(i));
-                                }
+                                currentMatches.Union(IsColumnExplosion(simplifiedUpElement, simplifiedCurrentElement, simplifiedDownElement));
+
                                 // Logic for row explosion when there's horizontal match
-                                if (currentElement.GetComponent<Element>().isRowExplosion)
-                                {
-                                    currentMatches.Union(GetRowElements(j)); // Center piece
-                                }
-                                if (upElement.GetComponent<Element>().isRowExplosion)
-                                {
-                                    currentMatches.Union(GetRowElements(j + 1)); // Left piece
-                                }
-                                if (downElement.GetComponent<Element>().isRowExplosion)
-                                {
-                                    currentMatches.Union(GetRowElements(j - 1)); // Right piece
-                                }
+                                currentMatches.Union(IsRowExplosion(simplifiedUpElement, simplifiedCurrentElement, simplifiedDownElement));
 
-                                if (!currentMatches.Contains(upElement))
-                                {
-                                    currentMatches.Add(upElement);
-                                }
-                                upElement.GetComponent<Element>().isMatched = true;
-
-                                if (!currentMatches.Contains(downElement))
-                                {
-                                    currentMatches.Add(downElement);
-                                }
-                                downElement.GetComponent<Element>().isMatched = true;
-
-                                if (!currentMatches.Contains(currentElement))
-                                {
-                                    currentMatches.Add(currentElement);
-                                }
-                                currentElement.GetComponent<Element>().isMatched = true;
+                                GetNearbyElements(upElement, currentElement, downElement);
                             }
                         }
                     }

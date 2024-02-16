@@ -115,12 +115,11 @@ public class Board : MonoBehaviour
         {
             // Count ammount of Elements that match
             if (findMatches.currentMatches.Count == 4
-            || findMatches.currentMatches.Count == 7)
+                || findMatches.currentMatches.Count == 7)
             {
                 findMatches.CheckSkills();
             }
 
-            findMatches.currentMatches.Remove(allElements[column, row]);
             GameObject destroyAnimation = Instantiate(destroyEffect, allElements[column, row].transform.position, Quaternion.identity);
             Destroy(destroyAnimation, .3f);
             Destroy(allElements[column, row]);
@@ -141,6 +140,7 @@ public class Board : MonoBehaviour
             }
         }
 
+        findMatches.currentMatches.Clear();
         StartCoroutine(DecreaseRowCo());
     }
 

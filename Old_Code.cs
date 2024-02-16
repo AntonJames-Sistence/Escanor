@@ -71,3 +71,77 @@
 //     neighborElement.GenerateColumnExplosionSkill();
 // }
 // }
+
+                                // if (currentElement.GetComponent<Element>().isRowExplosion)
+                                // {
+                                //     currentMatches.Union(GetRowElements(j)); // Center piece
+                                // }
+                                // if (upElement.GetComponent<Element>().isRowExplosion)
+                                // {
+                                //     currentMatches.Union(GetRowElements(j + 1)); // Left piece
+                                // }
+                                // if (downElement.GetComponent<Element>().isRowExplosion)
+                                // {
+                                //     currentMatches.Union(GetRowElements(j - 1)); // Right piece
+                                // }
+                                // if (currentElement.GetComponent<Element>().isRowExplosion
+                                //     || leftElement.GetComponent<Element>().isRowExplosion
+                                //     || rightElement.GetComponent<Element>().isRowExplosion)
+                                // {
+                                //     currentMatches.Union(GetRowElements(j));
+                                // }
+
+                                // if (currentElement.GetComponent<Element>().isColumnExplosion)
+                                // {
+                                //     currentMatches.Union(GetColumnElements(i)); // Center piece
+                                // }
+                                // if (leftElement.GetComponent<Element>().isColumnExplosion)
+                                // {
+                                //     currentMatches.Union(GetColumnElements(i - 1)); // Left piece
+                                // }
+                                // if (rightElement.GetComponent<Element>().isColumnExplosion)
+                                // {
+                                //     currentMatches.Union(GetColumnElements(i + 1)); // Right piece
+                                // }
+                                // if (currentElement.GetComponent<Element>().isColumnExplosion
+                                //     || upElement.GetComponent<Element>().isColumnExplosion
+                                //     || downElement.GetComponent<Element>().isColumnExplosion)
+                                // {
+                                //     currentMatches.Union(GetColumnElements(i));
+                                // }
+
+                                // if (!currentMatches.Contains(leftElement))
+                                // {
+                                //     currentMatches.Add(leftElement);
+                                // }
+                                // leftElement.GetComponent<Element>().isMatched = true;
+
+                                // if (!currentMatches.Contains(rightElement))
+                                // {
+                                //     currentMatches.Add(rightElement);
+                                // }
+                                // rightElement.GetComponent<Element>().isMatched = true;
+
+                                // if (!currentMatches.Contains(currentElement))
+                                // {
+                                //     currentMatches.Add(currentElement);
+                                // }
+                                // currentElement.GetComponent<Element>().isMatched = true;
+
+                                // if (!currentMatches.Contains(upElement))
+                                // {
+                                //     currentMatches.Add(upElement);
+                                // }
+                                // upElement.GetComponent<Element>().isMatched = true;
+
+                                // if (!currentMatches.Contains(downElement))
+                                // {
+                                //     currentMatches.Add(downElement);
+                                // }
+                                // downElement.GetComponent<Element>().isMatched = true;
+
+                                // if (!currentMatches.Contains(currentElement))
+                                // {
+                                //     currentMatches.Add(currentElement);
+                                // }
+                                // currentElement.GetComponent<Element>().isMatched = true;
