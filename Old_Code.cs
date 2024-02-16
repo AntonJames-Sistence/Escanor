@@ -84,10 +84,28 @@
                                 // {
                                 //     currentMatches.Union(GetRowElements(j - 1)); // Right piece
                                 // }
-
                                 // if (currentElement.GetComponent<Element>().isRowExplosion
                                 //     || leftElement.GetComponent<Element>().isRowExplosion
                                 //     || rightElement.GetComponent<Element>().isRowExplosion)
                                 // {
                                 //     currentMatches.Union(GetRowElements(j));
+                                // }
+
+                                // if (currentElement.GetComponent<Element>().isColumnExplosion)
+                                // {
+                                //     currentMatches.Union(GetColumnElements(i)); // Center piece
+                                // }
+                                // if (leftElement.GetComponent<Element>().isColumnExplosion)
+                                // {
+                                //     currentMatches.Union(GetColumnElements(i - 1)); // Left piece
+                                // }
+                                // if (rightElement.GetComponent<Element>().isColumnExplosion)
+                                // {
+                                //     currentMatches.Union(GetColumnElements(i + 1)); // Right piece
+                                // }
+                                // if (currentElement.GetComponent<Element>().isColumnExplosion
+                                //     || upElement.GetComponent<Element>().isColumnExplosion
+                                //     || downElement.GetComponent<Element>().isColumnExplosion)
+                                // {
+                                //     currentMatches.Union(GetColumnElements(i));
                                 // }

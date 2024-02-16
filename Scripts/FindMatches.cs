@@ -89,18 +89,7 @@ public class FindMatches : MonoBehaviour
                                 currentMatches.Union(IsRowExplosion(simplifiedLeftElement, simplifiedCurrentElement, simplifiedRightElement));
 
                                 // Logic for column explosion when there's vertical match
-                                if (currentElement.GetComponent<Element>().isColumnExplosion)
-                                {
-                                    currentMatches.Union(GetColumnElements(i)); // Center piece
-                                }
-                                if (leftElement.GetComponent<Element>().isColumnExplosion)
-                                {
-                                    currentMatches.Union(GetColumnElements(i - 1)); // Left piece
-                                }
-                                if (rightElement.GetComponent<Element>().isColumnExplosion)
-                                {
-                                    currentMatches.Union(GetColumnElements(i + 1)); // Right piece
-                                }
+                                currentMatches.Union(IsColumnExplosion(simplifiedLeftElement, simplifiedCurrentElement, simplifiedRightElement));
 
                                 if (!currentMatches.Contains(leftElement))
                                 {
@@ -135,12 +124,7 @@ public class FindMatches : MonoBehaviour
                             if (upElement.tag == currentElement.tag && downElement.tag == currentElement.tag)
                             {
                                 // Check for column explosion
-                                if (currentElement.GetComponent<Element>().isColumnExplosion
-                                    || upElement.GetComponent<Element>().isColumnExplosion
-                                    || downElement.GetComponent<Element>().isColumnExplosion)
-                                {
-                                    currentMatches.Union(GetColumnElements(i));
-                                }
+                                currentMatches.Union(IsColumnExplosion(simplifiedUpElement, currentElement, simplifiedDownElement));
 
                                 // Logic for row explosion when there's horizontal match
                                 currentMatches.Union(IsRowExplosion(simplifiedUpElement, currentElement, simplifiedDownElement));
