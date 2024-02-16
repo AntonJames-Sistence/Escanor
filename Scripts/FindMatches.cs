@@ -19,6 +19,27 @@ public class FindMatches : MonoBehaviour
         StartCoroutine(FindMatchesCo());
     }
 
+    private List<GameObject> IsRowExplosionSkill(Element element1, Element element2, Element element3)
+    {
+        // Create list of current elements
+        List<GameObject> currentElements = new List<GameObject>();
+
+        if (element1.isRowExplosion)
+        {
+            currentMatches.Union(GetRowElements(element1.row)); // Center piece
+        }
+        if (element2.isRowExplosion)
+        {
+            currentMatches.Union(GetRowElements(element2.row)); // Left piece
+        }
+        if (element3.isRowExplosion)
+        {
+            currentMatches.Union(GetRowElements(element3.row)); // Right piece
+        }
+
+        return currentElements;
+    }
+
     private IEnumerator FindMatchesCo()
     {
         yield return new WaitForSeconds(.2f);
