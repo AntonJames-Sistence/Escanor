@@ -26,15 +26,15 @@ public class FindMatches : MonoBehaviour
 
         if (element1.isRowExplosion)
         {
-            currentMatches.Union(GetRowElements(element1.row)); // Center piece
+            currentMatches.Union(GetRowElements(element1.row));
         }
         if (element2.isRowExplosion)
         {
-            currentMatches.Union(GetRowElements(element2.row)); // Left piece
+            currentMatches.Union(GetRowElements(element2.row));
         }
         if (element3.isRowExplosion)
         {
-            currentMatches.Union(GetRowElements(element3.row)); // Right piece
+            currentMatches.Union(GetRowElements(element3.row));
         }
 
         return currentElements;
@@ -49,25 +49,24 @@ public class FindMatches : MonoBehaviour
             for (int j = 0; j < board.height; j++)
             {
                 GameObject currentElement = board.allElements[i, j];
+                Element simplifiedCurrentElement = currentElement.GetComponent<Element>();
 
                 if (currentElement != null)
                 {
                     if (i > 0 && i < board.width - 1)
                     {
                         GameObject leftElement = board.allElements[i - 1, j];
+                        Element simplifiedLeftElement = leftElement.GetComponent<Element>();
                         GameObject rightElement = board.allElements[i + 1, j];
+                        Element simplifiedRightElement = rightElement.GetComponent<Element>();
 
                         if (leftElement && rightElement)
                         {
                             if (leftElement.tag == currentElement.tag && rightElement.tag == currentElement.tag)
                             {
                                 // Logic for row explosion when horizontal match
-                                if (currentElement.GetComponent<Element>().isRowExplosion
-                                    || leftElement.GetComponent<Element>().isRowExplosion
-                                    || rightElement.GetComponent<Element>().isRowExplosion)
-                                {
-                                    currentMatches.Union(GetRowElements(j));
-                                }
+                                currentMatches.Union(simplifiedLeftElement, simplifiedCurrentElement, simplifiedRightElement);
+
                                 // Logic for column explosion when there's vertical match
                                 if (currentElement.GetComponent<Element>().isColumnExplosion)
                                 {
@@ -106,7 +105,9 @@ public class FindMatches : MonoBehaviour
                     if (j > 0 && j < board.height - 1)
                     {
                         GameObject upElement = board.allElements[i, j + 1];
+                        Element simplifiedUpElement = upElement.GetComponent<Element>();
                         GameObject downElement = board.allElements[i, j - 1];
+                        Element simplifiedDownElement = downElement.GetComponent<Element>();
 
                         if (upElement && downElement)
                         {
@@ -119,19 +120,9 @@ public class FindMatches : MonoBehaviour
                                 {
                                     currentMatches.Union(GetColumnElements(i));
                                 }
+
                                 // Logic for row explosion when there's horizontal match
-                                if (currentElement.GetComponent<Element>().isRowExplosion)
-                                {
-                                    currentMatches.Union(GetRowElements(j)); // Center piece
-                                }
-                                if (upElement.GetComponent<Element>().isRowExplosion)
-                                {
-                                    currentMatches.Union(GetRowElements(j + 1)); // Left piece
-                                }
-                                if (downElement.GetComponent<Element>().isRowExplosion)
-                                {
-                                    currentMatches.Union(GetRowElements(j - 1)); // Right piece
-                                }
+                                currentMatches.Union(IsRowExplosionSkill(simplifiedUpElement, currentElement, simplifiedDownElement));
 
                                 if (!currentMatches.Contains(upElement))
                                 {

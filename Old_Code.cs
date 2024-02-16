@@ -71,3 +71,23 @@
 //     neighborElement.GenerateColumnExplosionSkill();
 // }
 // }
+
+                                // if (currentElement.GetComponent<Element>().isRowExplosion)
+                                // {
+                                //     currentMatches.Union(GetRowElements(j)); // Center piece
+                                // }
+                                // if (upElement.GetComponent<Element>().isRowExplosion)
+                                // {
+                                //     currentMatches.Union(GetRowElements(j + 1)); // Left piece
+                                // }
+                                // if (downElement.GetComponent<Element>().isRowExplosion)
+                                // {
+                                //     currentMatches.Union(GetRowElements(j - 1)); // Right piece
+                                // }
+
+                                // if (currentElement.GetComponent<Element>().isRowExplosion
+                                //     || leftElement.GetComponent<Element>().isRowExplosion
+                                //     || rightElement.GetComponent<Element>().isRowExplosion)
+                                // {
+                                //     currentMatches.Union(GetRowElements(j));
+                                // }
