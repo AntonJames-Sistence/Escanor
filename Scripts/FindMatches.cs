@@ -65,7 +65,7 @@ public class FindMatches : MonoBehaviour
                             if (leftElement.tag == currentElement.tag && rightElement.tag == currentElement.tag)
                             {
                                 // Logic for row explosion when horizontal match
-                                currentMatches.Union(simplifiedLeftElement, simplifiedCurrentElement, simplifiedRightElement);
+                                currentMatches.Union(IsRowExplosionSkill(simplifiedLeftElement, simplifiedCurrentElement, simplifiedRightElement));
 
                                 // Logic for column explosion when there's vertical match
                                 if (currentElement.GetComponent<Element>().isColumnExplosion)
