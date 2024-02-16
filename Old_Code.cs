@@ -127,3 +127,21 @@
                                 //     currentMatches.Add(currentElement);
                                 // }
                                 // currentElement.GetComponent<Element>().isMatched = true;
+
+                                // if (!currentMatches.Contains(upElement))
+                                // {
+                                //     currentMatches.Add(upElement);
+                                // }
+                                // upElement.GetComponent<Element>().isMatched = true;
+
+                                // if (!currentMatches.Contains(downElement))
+                                // {
+                                //     currentMatches.Add(downElement);
+                                // }
+                                // downElement.GetComponent<Element>().isMatched = true;
+
+                                // if (!currentMatches.Contains(currentElement))
+                                // {
+                                //     currentMatches.Add(currentElement);
+                                // }
+                                // currentElement.GetComponent<Element>().isMatched = true;

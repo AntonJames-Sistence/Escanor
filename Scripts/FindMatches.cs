@@ -79,7 +79,7 @@ public class FindMatches : MonoBehaviour
 
     private IEnumerator FindMatchesCo()
     {
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(.4f);
 
         for (int i = 0; i < board.width; i++)
         {
@@ -124,28 +124,12 @@ public class FindMatches : MonoBehaviour
                             if (upElement.tag == currentElement.tag && downElement.tag == currentElement.tag)
                             {
                                 // Check for column explosion
-                                currentMatches.Union(IsColumnExplosion(simplifiedUpElement, currentElement, simplifiedDownElement));
+                                currentMatches.Union(IsColumnExplosion(simplifiedUpElement, simplifiedCurrentElement, simplifiedDownElement));
 
                                 // Logic for row explosion when there's horizontal match
-                                currentMatches.Union(IsRowExplosion(simplifiedUpElement, currentElement, simplifiedDownElement));
+                                currentMatches.Union(IsRowExplosion(simplifiedUpElement, simplifiedCurrentElement, simplifiedDownElement));
 
-                                if (!currentMatches.Contains(upElement))
-                                {
-                                    currentMatches.Add(upElement);
-                                }
-                                upElement.GetComponent<Element>().isMatched = true;
-
-                                if (!currentMatches.Contains(downElement))
-                                {
-                                    currentMatches.Add(downElement);
-                                }
-                                downElement.GetComponent<Element>().isMatched = true;
-
-                                if (!currentMatches.Contains(currentElement))
-                                {
-                                    currentMatches.Add(currentElement);
-                                }
-                                currentElement.GetComponent<Element>().isMatched = true;
+                                GetNearbyElements(upElement, currentElement, downElement);
                             }
                         }
                     }
