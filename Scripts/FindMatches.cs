@@ -19,6 +19,27 @@ public class FindMatches : MonoBehaviour
         StartCoroutine(FindMatchesCo());
     }
 
+    private List<GameObject> IsCircleExplosion(Element element1, Element element2, Element element3)
+    {
+        // Create list of current elements
+        List<GameObject> currentElements = new List<GameObject>();
+
+        if (element1.isCircleExplosion)
+        {
+            currentMatches.Union(GetAdjacentElements(element1.column, element1.row));
+        }
+        if (element2.isCircleExplosion)
+        {
+            currentMatches.Union(GetAdjacentElements(element2.column, element2.row));
+        }
+        if (element3.isCircleExplosion)
+        {
+            currentMatches.Union(GetAdjacentElements(element3.column, element3.row));
+        }
+
+        return currentElements;
+    }
+
     private List<GameObject> IsRowExplosion(Element element1, Element element2, Element element3)
     {
         // Create list of current elements
@@ -104,11 +125,14 @@ public class FindMatches : MonoBehaviour
 
                             if (leftElement.tag == currentElement.tag && rightElement.tag == currentElement.tag)
                             {
-                                // Logic for row explosion when horizontal match
+                                // Logic for row explosion
                                 currentMatches.Union(IsRowExplosion(simplifiedLeftElement, simplifiedCurrentElement, simplifiedRightElement));
 
-                                // Logic for column explosion when there's vertical match
+                                // Logic for column explosion
                                 currentMatches.Union(IsColumnExplosion(simplifiedLeftElement, simplifiedCurrentElement, simplifiedRightElement));
+
+                                // Logic for circle explosion
+                                currentMatches.Union(IsCircleExplosion(simplifiedLeftElement, simplifiedCurrentElement, simplifiedRightElement));
 
                                 GetNearbyElements(leftElement, currentElement, rightElement);
                             }
@@ -131,8 +155,11 @@ public class FindMatches : MonoBehaviour
                                 // Check for column explosion
                                 currentMatches.Union(IsColumnExplosion(simplifiedUpElement, simplifiedCurrentElement, simplifiedDownElement));
 
-                                // Logic for row explosion when there's horizontal match
+                                // Logic for row explosion
                                 currentMatches.Union(IsRowExplosion(simplifiedUpElement, simplifiedCurrentElement, simplifiedDownElement));
+
+                                // Logic for circle explosion
+                                currentMatches.Union(IsCircleExplosion(simplifiedUpElement, simplifiedCurrentElement, simplifiedDownElement));
 
                                 GetNearbyElements(upElement, currentElement, downElement);
                             }
