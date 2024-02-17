@@ -29,15 +29,19 @@ public class Element : MonoBehaviour
     public bool isSameElementExplosion;
     public bool isColumnExplosion;
     public bool isRowExplosion;
+    public bool isCircleExplosion;
     public GameObject columnExplosionSkill;
     public GameObject rowExplosionSkill;
     public GameObject sameElementExplosionSkill;
+    public GameObject circleExplosionSkill;
 
     // Start is called before the first frame update
     void Start()
     {
         isColumnExplosion = false;
         isRowExplosion = false;
+        isCircleExplosion = false;
+        isSameElementExplosion = false;
 
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
@@ -54,8 +58,8 @@ public class Element : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            isSameElementExplosion = true;
-            GameObject explosion = Instantiate(sameElementExplosionSkill, transform.position, Quaternion.identity);
+            isCircleExplosion = true;
+            GameObject explosion = Instantiate(circleExplosionSkill, transform.position, Quaternion.identity);
             explosion.transform.parent = this.transform;
         }
     }
