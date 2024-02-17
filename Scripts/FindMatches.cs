@@ -86,19 +86,22 @@ public class FindMatches : MonoBehaviour
             for (int j = 0; j < board.height; j++)
             {
                 GameObject currentElement = board.allElements[i, j];
-                Element simplifiedCurrentElement = currentElement.GetComponent<Element>();
 
                 if (currentElement != null)
                 {
+                    // Refference to current element, make future refference easier
+                    Element simplifiedCurrentElement = currentElement.GetComponent<Element>();
                     if (i > 0 && i < board.width - 1)
                     {
                         GameObject leftElement = board.allElements[i - 1, j];
-                        Element simplifiedLeftElement = leftElement.GetComponent<Element>();
                         GameObject rightElement = board.allElements[i + 1, j];
-                        Element simplifiedRightElement = rightElement.GetComponent<Element>();
 
-                        if (leftElement && rightElement)
+                        if (leftElement != null && rightElement != null)
                         {
+                            // Make sure elements exist before creating refference
+                            Element simplifiedLeftElement = leftElement.GetComponent<Element>();
+                            Element simplifiedRightElement = rightElement.GetComponent<Element>();
+
                             if (leftElement.tag == currentElement.tag && rightElement.tag == currentElement.tag)
                             {
                                 // Logic for row explosion when horizontal match
@@ -115,12 +118,14 @@ public class FindMatches : MonoBehaviour
                     if (j > 0 && j < board.height - 1)
                     {
                         GameObject upElement = board.allElements[i, j + 1];
-                        Element simplifiedUpElement = upElement.GetComponent<Element>();
                         GameObject downElement = board.allElements[i, j - 1];
-                        Element simplifiedDownElement = downElement.GetComponent<Element>();
 
-                        if (upElement && downElement)
+                        if (upElement != null && downElement != null)
                         {
+                            // Make sure elements exists before creating refference
+                            Element simplifiedUpElement = upElement.GetComponent<Element>();
+                            Element simplifiedDownElement = downElement.GetComponent<Element>();
+
                             if (upElement.tag == currentElement.tag && downElement.tag == currentElement.tag)
                             {
                                 // Check for column explosion
