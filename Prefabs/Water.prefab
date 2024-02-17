@@ -156,6 +156,8 @@ MonoBehaviour:
   isSameElementExplosion: 0
   isColumnExplosion: 0
   isRowExplosion: 0
+  isCircleExplosion: 0
   columnExplosionSkill: {fileID: 1574239613560337041, guid: 2ca7bcd7c77f54dc981966a61236f94c, type: 3}
   rowExplosionSkill: {fileID: 6926873629373241047, guid: cd9eddc7e95f74443ac27ed21d34fd04, type: 3}
   sameElementExplosionSkill: {fileID: 1111566142320425144, guid: 765e0e3e4f57c452a91ae5e9a34e52cd, type: 3}
+  circleExplosionSkill: {fileID: 5068326923456176029, guid: e8809373255a44ae3b731295663d137d, type: 3}

@@ -143,7 +143,7 @@ public class FindMatches : MonoBehaviour
         }
     }
 
-    // Get all Elements same type
+    // Match all Elements of the same type
     public void MatchAllSameElements(string elementsType)
     {
         for (int i = 0; i < board.width; i++)
@@ -162,6 +162,29 @@ public class FindMatches : MonoBehaviour
                 }
             }
         }
+    }
+
+    // Helper function for adjacent pieces
+    List<GameObject> GetAdjacentElements(int column, int row)
+    {
+        List<GameObject> elements = new List<GameObject>();
+
+        // Iterate double loop, but only col-1 -> col+1 / row - 1 -> row + 1 from the element
+        for (int i = column - 1; i <= column + 1; i++)
+        {
+            for (int j = row - 1; j <= row + 1; j++)
+            {
+                // Check if index is valid (inside the board)
+                if (i >= 0 && i < board.width && j >= 0 && j < board.height)
+                {
+                    // add element to array
+                    elements.Add(board.allElements[i, j]);
+                    board.allElements[i, j].GetComponent<Element>().isMatched = true;
+                }
+            }
+        }
+
+        return elements;
     }
 
     // Helper function to grab board column Elements
