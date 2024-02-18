@@ -26,9 +26,9 @@ public class Element : MonoBehaviour
     public float swipeResistance = .7f;
 
     [Header("Powerup Variables")]
-    public bool isSameElementExplosion;
     public bool isColumnExplosion;
     public bool isRowExplosion;
+    public bool isSameElementExplosion;
     public bool isCircleExplosion;
     public GameObject columnExplosionSkill;
     public GameObject rowExplosionSkill;
@@ -38,6 +38,7 @@ public class Element : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Set all skills to false before start of the game
         isColumnExplosion = false;
         isRowExplosion = false;
         isCircleExplosion = false;

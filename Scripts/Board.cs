@@ -147,10 +147,49 @@ public class Board : MonoBehaviour
             if (ColumnOrRow())
             {
                 // Make same explosion skill
-                Debug.Log("Make same explosion skill");
+                // If current element is matched we want to unmatch it and add SameExplosionSkill to it
+                if (currentElement && currentElement.isMatched)
+                {
+                    // If element is not skill holder
+                    if (!currentElement.isSameElementExplosion)
+                    {
+                        currentElement.isMatched = false;
+                        currentElement.GenerateSameElementExplosionSkill();
+                    } else {
+                        // Same run but for neighbor element
+                        if (currentElement.neighborElement)
+                        {
+                            Element neighborElement = currentElement.neighborElement.GetComponent<Element>();
+                            if (neighborElement.isMatched && !neighborElement.isSameElementExplosion)
+                            {
+                                neighborElement.isMatched = false;
+                                neighborElement.GenerateSameElementExplosionSkill();
+                            }
+                        }
+                    }
+                }
             } else {
                 // Make circle explosion skill
-                Debug.Log("Make circle explosion skill");
+                // If current element is matched we want to unmatch it and add CircleExplosionSkill to it
+                if (currentElement && currentElement.isMatched)
+                {
+                    if (!currentElement.isCircleExplosion)
+                    {
+                        currentElement.isMatched = false;
+                        currentElement.GenerateCircleExplosionSkill();
+                    } else {
+                        // Same run but for neighbor element
+                        if (currentElement.neighborElement)
+                        {
+                            Element neighborElement = currentElement.neighborElement.GetComponent<Element>();
+                            if (neighborElement.isMatched && !neighborElement.isCircleExplosion)
+                            {
+                                neighborElement.isMatched = false;
+                                neighborElement.GenerateCircleExplosionSkill();
+                            }
+                        }
+                    }
+                }
             }
         }
     }
