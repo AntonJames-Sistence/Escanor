@@ -148,7 +148,7 @@ public class Board : MonoBehaviour
             {
                 // Make same explosion skill
                 // If current element is matched we want to unmatch it and add SameExplosionSkill to it
-                if (currentElement && currentElement.isMatched)
+                if (currentElement != null && currentElement.isMatched)
                 {
                     // If element is not skill holder
                     if (!currentElement.isSameElementExplosion)
@@ -171,7 +171,7 @@ public class Board : MonoBehaviour
             } else {
                 // Make circle explosion skill
                 // If current element is matched we want to unmatch it and add CircleExplosionSkill to it
-                if (currentElement && currentElement.isMatched)
+                if (currentElement != null && currentElement.isMatched)
                 {
                     if (!currentElement.isCircleExplosion)
                     {
@@ -179,7 +179,7 @@ public class Board : MonoBehaviour
                         currentElement.GenerateCircleExplosionSkill();
                     } else {
                         // Same run but for neighbor element
-                        if (currentElement.neighborElement)
+                        if (currentElement.neighborElement != null)
                         {
                             Element neighborElement = currentElement.neighborElement.GetComponent<Element>();
                             if (neighborElement.isMatched && !neighborElement.isCircleExplosion)
