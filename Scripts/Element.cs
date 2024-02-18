@@ -230,4 +230,18 @@ public class Element : MonoBehaviour
         skill.transform.parent = this.transform;
     }
 
+    public void GenerateSameElementExplosionSkill()
+    {
+        isSameElementExplosion = true;
+        GameObject skill = Instantiate(sameElementExplosionSkill, transform.position, Quaternion.identity);
+        skill.transform.parent = this.transform;
+    }
+
+    public void GenerateCircleExplosionSkill()
+    {
+        isCircleExplosion = true;
+        GameObject skill = Instantiate(circleExplosionSkill, transform.position, Quaternion.identity);
+        skill.transform.parent = this.transform;
+    }
+
 }
