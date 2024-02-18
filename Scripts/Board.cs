@@ -148,45 +148,52 @@ public class Board : MonoBehaviour
             {
                 // Make same explosion skill
                 // If current element is matched we want to unmatch it and add SameExplosionSkill to it
-                if (currentElement != null && currentElement.isMatched)
+                if (currentElement != null)
                 {
-                    // If element is not skill holder
-                    if (!currentElement.isSameElementExplosion)
+                    if (currentElement.isMatched)
                     {
-                        currentElement.isMatched = false;
-                        currentElement.GenerateSameElementExplosionSkill();
+                        if (!currentElement.isSameElementExplosion) // If element is not skill holder
+                        {
+                            currentElement.isMatched = false;
+                            currentElement.GenerateSameElementExplosionSkill();
+                        }
                     } else {
                         // Same run but for neighbor element
-                        if (currentElement.neighborElement)
+                        if (currentElement.neighborElement != null)
                         {
                             Element neighborElement = currentElement.neighborElement.GetComponent<Element>();
-                            if (neighborElement.isMatched && !neighborElement.isSameElementExplosion)
-                            {
-                                neighborElement.isMatched = false;
-                                neighborElement.GenerateSameElementExplosionSkill();
-                            }
+                            if (neighborElement.isMatched)
+                                if (!neighborElement.isSameElementExplosion)
+                                {
+                                    neighborElement.isMatched = false;
+                                    neighborElement.GenerateSameElementExplosionSkill();
+                                }
                         }
                     }
                 }
             } else {
                 // Make circle explosion skill
                 // If current element is matched we want to unmatch it and add CircleExplosionSkill to it
-                if (currentElement != null && currentElement.isMatched)
+                if (currentElement != null)
                 {
-                    if (!currentElement.isCircleExplosion)
+                    if (currentElement.isMatched)
                     {
-                        currentElement.isMatched = false;
-                        currentElement.GenerateCircleExplosionSkill();
+                        if (!currentElement.isCircleExplosion) // If element is not skill holder
+                        {
+                            currentElement.isMatched = false;
+                            currentElement.GenerateCircleExplosionSkill();
+                        }
                     } else {
                         // Same run but for neighbor element
                         if (currentElement.neighborElement != null)
                         {
                             Element neighborElement = currentElement.neighborElement.GetComponent<Element>();
-                            if (neighborElement.isMatched && !neighborElement.isCircleExplosion)
-                            {
-                                neighborElement.isMatched = false;
-                                neighborElement.GenerateCircleExplosionSkill();
-                            }
+                            if (neighborElement.isMatched)
+                                if (!neighborElement.isCircleExplosion)
+                                {
+                                    neighborElement.isMatched = false;
+                                    neighborElement.GenerateCircleExplosionSkill();
+                                }
                         }
                     }
                 }
