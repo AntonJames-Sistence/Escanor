@@ -192,6 +192,7 @@ public class Element : MonoBehaviour
             previousColumn = column;
             neighborElement.GetComponent<Element>().column -= 1;
             column += 1;
+            StartCoroutine(CheckMoveCo());
         } else if(swipeAngle > 45 && swipeAngle <= 135 && row < board.height - 1){
             //Swap up
             neighborElement = board.allElements[column, row + 1];
@@ -199,6 +200,7 @@ public class Element : MonoBehaviour
             previousColumn = column;
             neighborElement.GetComponent<Element>().row -= 1;
             row += 1;
+            StartCoroutine(CheckMoveCo());
         } else if((swipeAngle > 135 || swipeAngle <= -135) && column > 0){
             //Swap left
             neighborElement = board.allElements[column - 1, row];
@@ -206,6 +208,7 @@ public class Element : MonoBehaviour
             previousColumn = column;
             neighborElement.GetComponent<Element>().column += 1;
             column -= 1;
+            StartCoroutine(CheckMoveCo());
         } else if(swipeAngle < -45 && swipeAngle >= -135 && row > 0){
             //Swap down
             neighborElement = board.allElements[column, row - 1];
@@ -213,8 +216,10 @@ public class Element : MonoBehaviour
             previousColumn = column;
             neighborElement.GetComponent<Element>().row += 1;
             row -= 1;
+            StartCoroutine(CheckMoveCo());
         }
-        StartCoroutine(CheckMoveCo());
+            
+        board.currentState = GameState.move;
     }
 
     public void GenerateRowExplosionSkill()
