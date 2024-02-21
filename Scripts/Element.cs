@@ -183,40 +183,31 @@ public class Element : MonoBehaviour
         }
     }
 
+    void MoveElements(Vector2 direction)
+    {
+        neighborElement = board.allElements[column + (int)direction.x, row + (int)direction.y];
+        previousRow = row;
+        previousColumn = column;
+        neighborElement.GetComponent<Element>().column += -1 * (int)direction.x;
+        neighborElement.GetComponent<Element>().row += -1 * (int)direction.y;
+        column += (int)direction.x;
+        row += (int)direction.y;
+        StartCoroutine(CheckMoveCo());
+    }
+
     void SwapElements()
     {
         if(swipeAngle > -45 && swipeAngle <= 45 && column < board.width - 1){
-            //Swap right
-            neighborElement = board.allElements[column + 1, row];
-            previousRow = row;
-            previousColumn = column;
-            neighborElement.GetComponent<Element>().column -= 1;
-            column += 1;
-            StartCoroutine(CheckMoveCo());
+            MoveElements(Vector2.right);
         } else if(swipeAngle > 45 && swipeAngle <= 135 && row < board.height - 1){
             //Swap up
-            neighborElement = board.allElements[column, row + 1];
-            previousRow = row;
-            previousColumn = column;
-            neighborElement.GetComponent<Element>().row -= 1;
-            row += 1;
-            StartCoroutine(CheckMoveCo());
+            MoveElements(Vector2.up);
         } else if((swipeAngle > 135 || swipeAngle <= -135) && column > 0){
             //Swap left
-            neighborElement = board.allElements[column - 1, row];
-            previousRow = row;
-            previousColumn = column;
-            neighborElement.GetComponent<Element>().column += 1;
-            column -= 1;
-            StartCoroutine(CheckMoveCo());
+            MoveElements(Vector2.left);
         } else if(swipeAngle < -45 && swipeAngle >= -135 && row > 0){
             //Swap down
-            neighborElement = board.allElements[column, row - 1];
-            previousRow = row;
-            previousColumn = column;
-            neighborElement.GetComponent<Element>().row += 1;
-            row -= 1;
-            StartCoroutine(CheckMoveCo());
+            MoveElements(Vector2.down);
         }
             
         board.currentState = GameState.move;
