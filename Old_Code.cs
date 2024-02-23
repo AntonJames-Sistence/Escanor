@@ -1,3 +1,10 @@
+        // targetX = (int)transform.position.x;
+        // targetY = (int)transform.position.y;
+        // row = targetY;
+        // column = targetX;
+        // previousRow = row;
+        // previousColumn = column;
+
 // void FindMatches()
 // {
 //     if (column > 0 && column < board.width - 1){

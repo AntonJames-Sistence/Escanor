@@ -212,7 +212,7 @@ public class Board : MonoBehaviour
             }
 
             GameObject destroyAnimation = Instantiate(destroyEffect, allElements[column, row].transform.position, Quaternion.identity);
-            Destroy(destroyAnimation, .3f);
+            Destroy(destroyAnimation, .5f);
             Destroy(allElements[column, row]);
             allElements[column, row] = null;
         }
@@ -257,7 +257,7 @@ public class Board : MonoBehaviour
             nullCount = 0;
         }
 
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(.5f);
         StartCoroutine(FillBoardCo());
     }
 

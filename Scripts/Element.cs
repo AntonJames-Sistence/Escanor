@@ -46,12 +46,6 @@ public class Element : MonoBehaviour
 
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
-        // targetX = (int)transform.position.x;
-        // targetY = (int)transform.position.y;
-        // row = targetY;
-        // column = targetX;
-        // previousRow = row;
-        // previousColumn = column;
     }
 
     // Testing and debuggin purposes
