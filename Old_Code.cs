@@ -145,3 +145,29 @@
                                 //     currentMatches.Add(currentElement);
                                 // }
                                 // currentElement.GetComponent<Element>().isMatched = true;
+
+            //Swap right
+            // neighborElement = board.allElements[column + 1, row];
+            // previousRow = row;
+            // previousColumn = column;
+            // neighborElement.GetComponent<Element>().column -= 1;
+            // column += 1;
+            // StartCoroutine(CheckMoveCo());
+            // neighborElement = board.allElements[column, row + 1];
+            // previousRow = row;
+            // previousColumn = column;
+            // neighborElement.GetComponent<Element>().row -= 1;
+            // row += 1;
+            // StartCoroutine(CheckMoveCo());
+            //             neighborElement = board.allElements[column - 1, row];
+            // previousRow = row;
+            // previousColumn = column;
+            // neighborElement.GetComponent<Element>().column += 1;
+            // column -= 1;
+            // StartCoroutine(CheckMoveCo());
+            //             neighborElement = board.allElements[column, row - 1];
+            // previousRow = row;
+            // previousColumn = column;
+            // neighborElement.GetComponent<Element>().row += 1;
+            // row -= 1;
+            // StartCoroutine(CheckMoveCo());

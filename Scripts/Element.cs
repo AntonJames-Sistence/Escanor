@@ -26,18 +26,23 @@ public class Element : MonoBehaviour
     public float swipeResistance = .7f;
 
     [Header("Powerup Variables")]
-    public bool isSameElementExplosion;
     public bool isColumnExplosion;
     public bool isRowExplosion;
+    public bool isSameElementExplosion;
+    public bool isCircleExplosion;
     public GameObject columnExplosionSkill;
     public GameObject rowExplosionSkill;
     public GameObject sameElementExplosionSkill;
+    public GameObject circleExplosionSkill;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Set all skills to false before start of the game
         isColumnExplosion = false;
         isRowExplosion = false;
+        isCircleExplosion = false;
+        isSameElementExplosion = false;
 
         board = FindObjectOfType<Board>();
         findMatches = FindObjectOfType<FindMatches>();
@@ -54,8 +59,8 @@ public class Element : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            isSameElementExplosion = true;
-            GameObject explosion = Instantiate(sameElementExplosionSkill, transform.position, Quaternion.identity);
+            isCircleExplosion = true;
+            GameObject explosion = Instantiate(circleExplosionSkill, transform.position, Quaternion.identity);
             explosion.transform.parent = this.transform;
         }
     }
@@ -178,38 +183,34 @@ public class Element : MonoBehaviour
         }
     }
 
+    void MoveElements(Vector2 direction)
+    {
+        neighborElement = board.allElements[column + (int)direction.x, row + (int)direction.y];
+        previousRow = row;
+        previousColumn = column;
+        neighborElement.GetComponent<Element>().column += -1 * (int)direction.x;
+        neighborElement.GetComponent<Element>().row += -1 * (int)direction.y;
+        column += (int)direction.x;
+        row += (int)direction.y;
+        StartCoroutine(CheckMoveCo());
+    }
+
     void SwapElements()
     {
         if(swipeAngle > -45 && swipeAngle <= 45 && column < board.width - 1){
-            //Swap right
-            neighborElement = board.allElements[column + 1, row];
-            previousRow = row;
-            previousColumn = column;
-            neighborElement.GetComponent<Element>().column -= 1;
-            column += 1;
+            MoveElements(Vector2.right);
         } else if(swipeAngle > 45 && swipeAngle <= 135 && row < board.height - 1){
             //Swap up
-            neighborElement = board.allElements[column, row + 1];
-            previousRow = row;
-            previousColumn = column;
-            neighborElement.GetComponent<Element>().row -= 1;
-            row += 1;
+            MoveElements(Vector2.up);
         } else if((swipeAngle > 135 || swipeAngle <= -135) && column > 0){
             //Swap left
-            neighborElement = board.allElements[column - 1, row];
-            previousRow = row;
-            previousColumn = column;
-            neighborElement.GetComponent<Element>().column += 1;
-            column -= 1;
+            MoveElements(Vector2.left);
         } else if(swipeAngle < -45 && swipeAngle >= -135 && row > 0){
             //Swap down
-            neighborElement = board.allElements[column, row - 1];
-            previousRow = row;
-            previousColumn = column;
-            neighborElement.GetComponent<Element>().row += 1;
-            row -= 1;
+            MoveElements(Vector2.down);
         }
-        StartCoroutine(CheckMoveCo());
+            
+        board.currentState = GameState.move;
     }
 
     public void GenerateRowExplosionSkill()
@@ -223,6 +224,20 @@ public class Element : MonoBehaviour
     {
         isColumnExplosion = true;
         GameObject skill = Instantiate(columnExplosionSkill, transform.position, Quaternion.identity);
+        skill.transform.parent = this.transform;
+    }
+
+    public void GenerateSameElementExplosionSkill()
+    {
+        isSameElementExplosion = true;
+        GameObject skill = Instantiate(sameElementExplosionSkill, transform.position, Quaternion.identity);
+        skill.transform.parent = this.transform;
+    }
+
+    public void GenerateCircleExplosionSkill()
+    {
+        isCircleExplosion = true;
+        GameObject skill = Instantiate(circleExplosionSkill, transform.position, Quaternion.identity);
         skill.transform.parent = this.transform;
     }
 

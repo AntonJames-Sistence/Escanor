@@ -109,15 +109,106 @@ public class Board : MonoBehaviour
         return false;
     }
 
+    private bool ColumnOrRow()
+    {
+        int numberHorizontal = 0;
+        int numberVertical = 0;
+
+        Element firstPiece = findMatches.currentMatches[0].GetComponent<Element>();
+
+        if (firstPiece != null)
+        {
+            foreach(GameObject currentPiece in findMatches.currentMatches)
+            {
+                Element element = currentPiece.GetComponent<Element>();
+                if (element.row == firstPiece.row)
+                {
+                    numberHorizontal++;
+                }
+                if (element.column == firstPiece.column)
+                {
+                    numberVertical++;
+                }
+            }
+        }
+        
+        return (numberVertical == 5 || numberHorizontal == 5);
+    }
+
+    private void CheckToGenerateSkills()
+    {
+        if (findMatches.currentMatches.Count == 4 || findMatches.currentMatches.Count == 7)
+        {
+            findMatches.CheckSkills();
+        }
+
+        if (findMatches.currentMatches.Count == 5 || findMatches.currentMatches.Count == 8)
+        {
+            if (ColumnOrRow())
+            {
+                // Make same explosion skill
+                // If current element is matched we want to unmatch it and add SameExplosionSkill to it
+                if (currentElement != null)
+                {
+                    if (currentElement.isMatched)
+                    {
+                        if (!currentElement.isSameElementExplosion) // If element is not skill holder
+                        {
+                            currentElement.isMatched = false;
+                            currentElement.GenerateSameElementExplosionSkill();
+                        }
+                    } else {
+                        // Same run but for neighbor element
+                        if (currentElement.neighborElement != null)
+                        {
+                            Element neighborElement = currentElement.neighborElement.GetComponent<Element>();
+                            if (neighborElement.isMatched)
+                                if (!neighborElement.isSameElementExplosion)
+                                {
+                                    neighborElement.isMatched = false;
+                                    neighborElement.GenerateSameElementExplosionSkill();
+                                }
+                        }
+                    }
+                }
+            } else {
+                // Make circle explosion skill
+                // If current element is matched we want to unmatch it and add CircleExplosionSkill to it
+                if (currentElement != null)
+                {
+                    if (currentElement.isMatched)
+                    {
+                        if (!currentElement.isCircleExplosion) // If element is not skill holder
+                        {
+                            currentElement.isMatched = false;
+                            currentElement.GenerateCircleExplosionSkill();
+                        }
+                    } else {
+                        // Same run but for neighbor element
+                        if (currentElement.neighborElement != null)
+                        {
+                            Element neighborElement = currentElement.neighborElement.GetComponent<Element>();
+                            if (neighborElement.isMatched)
+                                if (!neighborElement.isCircleExplosion)
+                                {
+                                    neighborElement.isMatched = false;
+                                    neighborElement.GenerateCircleExplosionSkill();
+                                }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private void DestroyMatchesAt(int column, int row)
     {
         if (allElements[column, row].GetComponent<Element>().isMatched)
         {
             // Count ammount of Elements that match
-            if (findMatches.currentMatches.Count == 4
-                || findMatches.currentMatches.Count == 7)
+            if (findMatches.currentMatches.Count >= 4)
             {
-                findMatches.CheckSkills();
+                CheckToGenerateSkills();
             }
 
             GameObject destroyAnimation = Instantiate(destroyEffect, allElements[column, row].transform.position, Quaternion.identity);

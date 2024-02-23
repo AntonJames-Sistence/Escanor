@@ -19,6 +19,27 @@ public class FindMatches : MonoBehaviour
         StartCoroutine(FindMatchesCo());
     }
 
+    private List<GameObject> IsCircleExplosion(Element element1, Element element2, Element element3)
+    {
+        // Create list of current elements
+        List<GameObject> currentElements = new List<GameObject>();
+
+        if (element1.isCircleExplosion)
+        {
+            currentMatches.Union(GetAdjacentElements(element1.column, element1.row));
+        }
+        if (element2.isCircleExplosion)
+        {
+            currentMatches.Union(GetAdjacentElements(element2.column, element2.row));
+        }
+        if (element3.isCircleExplosion)
+        {
+            currentMatches.Union(GetAdjacentElements(element3.column, element3.row));
+        }
+
+        return currentElements;
+    }
+
     private List<GameObject> IsRowExplosion(Element element1, Element element2, Element element3)
     {
         // Create list of current elements
@@ -104,11 +125,14 @@ public class FindMatches : MonoBehaviour
 
                             if (leftElement.tag == currentElement.tag && rightElement.tag == currentElement.tag)
                             {
-                                // Logic for row explosion when horizontal match
+                                // Logic for row explosion
                                 currentMatches.Union(IsRowExplosion(simplifiedLeftElement, simplifiedCurrentElement, simplifiedRightElement));
 
-                                // Logic for column explosion when there's vertical match
+                                // Logic for column explosion
                                 currentMatches.Union(IsColumnExplosion(simplifiedLeftElement, simplifiedCurrentElement, simplifiedRightElement));
+
+                                // Logic for circle explosion
+                                currentMatches.Union(IsCircleExplosion(simplifiedLeftElement, simplifiedCurrentElement, simplifiedRightElement));
 
                                 GetNearbyElements(leftElement, currentElement, rightElement);
                             }
@@ -131,8 +155,11 @@ public class FindMatches : MonoBehaviour
                                 // Check for column explosion
                                 currentMatches.Union(IsColumnExplosion(simplifiedUpElement, simplifiedCurrentElement, simplifiedDownElement));
 
-                                // Logic for row explosion when there's horizontal match
+                                // Logic for row explosion
                                 currentMatches.Union(IsRowExplosion(simplifiedUpElement, simplifiedCurrentElement, simplifiedDownElement));
+
+                                // Logic for circle explosion
+                                currentMatches.Union(IsCircleExplosion(simplifiedUpElement, simplifiedCurrentElement, simplifiedDownElement));
 
                                 GetNearbyElements(upElement, currentElement, downElement);
                             }
@@ -143,7 +170,7 @@ public class FindMatches : MonoBehaviour
         }
     }
 
-    // Get all Elements same type
+    // Match all Elements of the same type
     public void MatchAllSameElements(string elementsType)
     {
         for (int i = 0; i < board.width; i++)
@@ -162,6 +189,29 @@ public class FindMatches : MonoBehaviour
                 }
             }
         }
+    }
+
+    // Helper function for adjacent pieces
+    List<GameObject> GetAdjacentElements(int column, int row)
+    {
+        List<GameObject> elements = new List<GameObject>();
+
+        // Iterate double loop, but only col-1 -> col+1 / row - 1 -> row + 1 from the element
+        for (int i = column - 1; i <= column + 1; i++)
+        {
+            for (int j = row - 1; j <= row + 1; j++)
+            {
+                // Check if index is valid (inside the board)
+                if (i >= 0 && i < board.width && j >= 0 && j < board.height)
+                {
+                    // add element to array
+                    elements.Add(board.allElements[i, j]);
+                    board.allElements[i, j].GetComponent<Element>().isMatched = true;
+                }
+            }
+        }
+
+        return elements;
     }
 
     // Helper function to grab board column Elements
