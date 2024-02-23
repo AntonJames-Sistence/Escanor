@@ -8,6 +8,21 @@ public enum GameState
     move
 }
 
+public enum TileKind
+{
+    Breakable,
+    Blank,
+    Normal,
+}
+
+public class TileType
+{
+    public int x;
+    public int y;
+    public TileKind tileKind;
+
+}
+
 public class Board : MonoBehaviour
 {
     public GameState currentState = GameState.move;
@@ -18,6 +33,7 @@ public class Board : MonoBehaviour
     public GameObject[] elements;
     public GameObject[,] allElements;
     public GameObject destroyEffect;
+    public TileType[] boardLayout;
     public Element currentElement;
 
     private BackgroundTile[,] allTiles;
