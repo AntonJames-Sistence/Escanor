@@ -182,11 +182,16 @@ public class Element : MonoBehaviour
         neighborElement = board.allElements[column + (int)direction.x, row + (int)direction.y];
         previousRow = row;
         previousColumn = column;
-        neighborElement.GetComponent<Element>().column += -1 * (int)direction.x;
-        neighborElement.GetComponent<Element>().row += -1 * (int)direction.y;
-        column += (int)direction.x;
-        row += (int)direction.y;
-        StartCoroutine(CheckMoveCo());
+        if (neighborElement != null)
+        {
+            neighborElement.GetComponent<Element>().column += -1 * (int)direction.x;
+            neighborElement.GetComponent<Element>().row += -1 * (int)direction.y;
+            column += (int)direction.x;
+            row += (int)direction.y;
+            StartCoroutine(CheckMoveCo());
+        } else {
+            board.currentState = GameState.move;
+        }
     }
 
     void SwapElements()
