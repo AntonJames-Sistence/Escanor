@@ -15,6 +15,7 @@ public enum TileKind
     Normal,
 }
 
+[System.Serializable]
 public class TileType
 {
     public int x;
@@ -36,16 +37,27 @@ public class Board : MonoBehaviour
     public TileType[] boardLayout;
     public Element currentElement;
 
-    private BackgroundTile[,] allTiles;
+    private bool[,] blankSpaces;
     private FindMatches findMatches;
 
     // Start is called before the first frame update
     void Start()
     {
         findMatches = FindObjectOfType<FindMatches>();
-        allTiles = new BackgroundTile[width, height];
+        blankSpaces = new bool[width, height];
         allElements = new GameObject[width, height];
         SetUp();
+    }
+
+    public void GenerateBlackSpaces()
+    {
+        for (int i = 0; i < boardLayout.Length; i++)
+        {
+            if (boardLayout[i].tileKind == TileKind.Blank)
+            {
+                blankSpaces[boardLayout[i].x, boardLayout[i].y] = true;
+            }
+        }
     }
 
     private void SetUp()
@@ -54,33 +66,32 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                Vector2 tempPosition = new Vector2(i, j + offSet);
-                GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
-                backgroundTile.transform.parent = this.transform;
-                backgroundTile.name = "( " + i + ", " + j + " )";
-
-                if (elements.Length > 0)
+                if (blankSpaces[i, j] == false)
                 {
-                    int elementToUse = Random.Range(0, elements.Length);
+                    Vector2 tempPosition = new Vector2(i, j + offSet);
+                    GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
+                    backgroundTile.transform.parent = this.transform;
+                    backgroundTile.name = "( " + i + ", " + j + " )";
 
-                    int maxIterations = 0;
-                    while (MatchesAt(i, j, elements[elementToUse]) && maxIterations < 100)
+                    if (elements.Length > 0)
                     {
-                        elementToUse = Random.Range(0, elements.Length);
-                        maxIterations++;
-                    }
-                    maxIterations = 0;
+                        int elementToUse = Random.Range(0, elements.Length);
 
-                    GameObject element = Instantiate(elements[elementToUse], tempPosition, Quaternion.identity);
-                    element.GetComponent<Element>().row = j;
-                    element.GetComponent<Element>().column = i;
-                    element.transform.parent = this.transform;
-                    element.name = "( " + i + ", " + j + " )";
-                    allElements[i, j] = element;
-                }
-                else
-                {
-                    Debug.LogError("No elements assigned to the BackgroundTile.");
+                        int maxIterations = 0;
+                        while (MatchesAt(i, j, elements[elementToUse]) && maxIterations < 100)
+                        {
+                            elementToUse = Random.Range(0, elements.Length);
+                            maxIterations++;
+                        }
+                        maxIterations = 0;
+
+                        GameObject element = Instantiate(elements[elementToUse], tempPosition, Quaternion.identity);
+                        element.GetComponent<Element>().row = j;
+                        element.GetComponent<Element>().column = i;
+                        element.transform.parent = this.transform;
+                        element.name = "( " + i + ", " + j + " )";
+                        allElements[i, j] = element;
+                    }
                 }
             }
         }

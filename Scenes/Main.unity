@@ -376,6 +376,25 @@ MonoBehaviour:
   - {fileID: 1703395890551888489, guid: 24830e077f3ec484f806da8ed893638a, type: 3}
   - {fileID: 7055640846806596859, guid: 124f8c6c1288f481bb184ef5c0f28d2c, type: 3}
   destroyEffect: {fileID: 5297747797145827348, guid: 232d8ee8f0a41479bbc4816422201437, type: 3}
+  boardLayout:
+  - x: 0
+    y: 0
+    tileKind: 1
+  - x: 6
+    y: 9
+    tileKind: 1
+  - x: 6
+    y: 0
+    tileKind: 1
+  - x: 0
+    y: 9
+    tileKind: 1
+  - x: 4
+    y: 4
+    tileKind: 1
+  - x: 5
+    y: 4
+    tileKind: 1
   currentElement: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
