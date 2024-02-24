@@ -62,6 +62,7 @@ public class Board : MonoBehaviour
 
     private void SetUp()
     {
+        GenerateBlackSpaces();
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -101,35 +102,48 @@ public class Board : MonoBehaviour
     {
         if (column > 1 && row > 1)
         {
-            if (allElements[column - 1, row].tag == piece.tag &&
-                allElements[column - 2, row].tag == piece.tag)
+            if (allElements[column - 1, row] != null && allElements[column - 2, row] != null)
+            {
+                if (allElements[column - 1, row].tag == piece.tag &&
+                    allElements[column - 2, row].tag == piece.tag)
                 {
                     return true;
                 }
+            }
 
-            if (allElements[column, row - 1].tag == piece.tag &&
-                allElements[column, row - 2].tag == piece.tag)
+            if (allElements[column, row - 1] != null && allElements[column, row - 2] != null)
+            {
+                if (allElements[column, row - 1].tag == piece.tag &&
+                    allElements[column, row - 2].tag == piece.tag)
                 {
                     return true;
                 }
+            }
         }
         else if (column <= 1 || row <= 1)
         {
             if (row > 1)
             {
-                if (allElements[column, row - 1].tag == piece.tag &&
-                    allElements[column, row - 2].tag == piece.tag)
+                if (allElements[column, row - 1] != null && allElements[column, row - 2] != null)
+                {
+                    if (allElements[column, row - 1].tag == piece.tag &&
+                        allElements[column, row - 2].tag == piece.tag)
                     {
                         return true;
                     }
+                }
             }
+
             if (column > 1)
             {
-                if (allElements[column - 1, row].tag == piece.tag &&
-                    allElements[column - 2, row].tag == piece.tag)
+                if (allElements[column - 1, row] != null && allElements[column - 2, row] != null)
+                {
+                    if (allElements[column - 1, row].tag == piece.tag &&
+                        allElements[column - 2, row].tag == piece.tag)
                     {
                         return true;
                     }
+                }
             }
         }
 
