@@ -31,6 +31,7 @@ public class Board : MonoBehaviour
     public int height;
     public int offSet;
     public GameObject tilePrefab;
+    public GameObject breakableTilePrefab;
     public GameObject[] elements;
     public GameObject[,] allElements;
     public GameObject destroyEffect;
@@ -38,11 +39,13 @@ public class Board : MonoBehaviour
     public Element currentElement;
 
     private bool[,] blankSpaces;
+    private BackgroundTile[,] breakableTiles;
     private FindMatches findMatches;
 
     // Start is called before the first frame update
     void Start()
     {
+        breakableTiles = new BackgroundTile[width, height];
         findMatches = FindObjectOfType<FindMatches>();
         blankSpaces = new bool[width, height];
         allElements = new GameObject[width, height];
@@ -56,6 +59,21 @@ public class Board : MonoBehaviour
             if (boardLayout[i].tileKind == TileKind.Blank)
             {
                 blankSpaces[boardLayout[i].x, boardLayout[i].y] = true;
+            }
+        }
+    }
+
+    public void GenerateBreakableTiles()
+    {
+        // Look at all tiles in the layout
+        for (int i = 0; i < boardLayout.Length; i++)
+        {
+            // If tile is "ice" tile, 
+            if (boardLayout[i].tileKind == TileKind.Breakable)
+            {
+                // Create "Ice" tile object
+                Vector2 tempPosition = new Vector2(boardLayout[i].x, boardLayout[i].y);
+                GameObject tile = Instantiate(breakableTilePrefab, tempPosition, Quaternion.identity);
             }
         }
     }
