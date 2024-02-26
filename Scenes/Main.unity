@@ -370,6 +370,7 @@ MonoBehaviour:
   height: 10
   offSet: 20
   tilePrefab: {fileID: 3791018284438028341, guid: e9b24fb6888d5451ea153631d3d7eaf3, type: 3}
+  breakableTilePrefab: {fileID: 221601296510918238, guid: 0881e322e269d407faeff12d1f4e6561, type: 3}
   elements:
   - {fileID: 7268380151107700020, guid: e75a98eba335b4634b95a92eaa262c61, type: 3}
   - {fileID: 5838761427168643266, guid: 08e02e942c9dd4633a082df15f1de80f, type: 3}
@@ -395,6 +396,24 @@ MonoBehaviour:
   - x: 5
     y: 4
     tileKind: 1
+  - x: 3
+    y: 4
+    tileKind: 1
+  - x: 2
+    y: 4
+    tileKind: 1
+  - x: 1
+    y: 4
+    tileKind: 1
+  - x: 1
+    y: 5
+    tileKind: 0
+  - x: 1
+    y: 6
+    tileKind: 0
+  - x: 1
+    y: 7
+    tileKind: 0
   currentElement: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -80,6 +80,7 @@ public class Board : MonoBehaviour
 
     private void SetUp()
     {
+        GenerateBreakableTiles();
         GenerateBlackSpaces();
         for (int i = 0; i < width; i++)
         {
