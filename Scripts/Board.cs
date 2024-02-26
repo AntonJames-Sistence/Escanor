@@ -8,6 +8,22 @@ public enum GameState
     move
 }
 
+public enum TileKind
+{
+    Breakable,
+    Blank,
+    Normal,
+}
+
+[System.Serializable]
+public class TileType
+{
+    public int x;
+    public int y;
+    public TileKind tileKind;
+
+}
+
 public class Board : MonoBehaviour
 {
     public GameState currentState = GameState.move;
@@ -15,56 +31,87 @@ public class Board : MonoBehaviour
     public int height;
     public int offSet;
     public GameObject tilePrefab;
+    public GameObject breakableTilePrefab;
     public GameObject[] elements;
     public GameObject[,] allElements;
     public GameObject destroyEffect;
+    public TileType[] boardLayout;
     public Element currentElement;
 
-    private BackgroundTile[,] allTiles;
+    private bool[,] blankSpaces;
+    private BackgroundTile[,] breakableTiles;
     private FindMatches findMatches;
 
     // Start is called before the first frame update
     void Start()
     {
+        breakableTiles = new BackgroundTile[width, height];
         findMatches = FindObjectOfType<FindMatches>();
-        allTiles = new BackgroundTile[width, height];
+        blankSpaces = new bool[width, height];
         allElements = new GameObject[width, height];
         SetUp();
     }
 
+    public void GenerateBlackSpaces()
+    {
+        for (int i = 0; i < boardLayout.Length; i++)
+        {
+            if (boardLayout[i].tileKind == TileKind.Blank)
+            {
+                blankSpaces[boardLayout[i].x, boardLayout[i].y] = true;
+            }
+        }
+    }
+
+    public void GenerateBreakableTiles()
+    {
+        // Look at all tiles in the layout
+        for (int i = 0; i < boardLayout.Length; i++)
+        {
+            // If tile is "ice" tile, 
+            if (boardLayout[i].tileKind == TileKind.Breakable)
+            {
+                // Create "Ice" tile object
+                Vector2 tempPosition = new Vector2(boardLayout[i].x, boardLayout[i].y);
+                GameObject tile = Instantiate(breakableTilePrefab, tempPosition, Quaternion.identity);
+            }
+        }
+    }
+
     private void SetUp()
     {
+        GenerateBreakableTiles();
+        GenerateBlackSpaces();
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
-                Vector2 tempPosition = new Vector2(i, j + offSet);
-                GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
-                backgroundTile.transform.parent = this.transform;
-                backgroundTile.name = "( " + i + ", " + j + " )";
-
-                if (elements.Length > 0)
+                if (blankSpaces[i, j] == false)
                 {
-                    int elementToUse = Random.Range(0, elements.Length);
+                    Vector2 tempPosition = new Vector2(i, j + offSet);
+                    GameObject backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity) as GameObject;
+                    backgroundTile.transform.parent = this.transform;
+                    backgroundTile.name = "( " + i + ", " + j + " )";
 
-                    int maxIterations = 0;
-                    while (MatchesAt(i, j, elements[elementToUse]) && maxIterations < 100)
+                    if (elements.Length > 0)
                     {
-                        elementToUse = Random.Range(0, elements.Length);
-                        maxIterations++;
-                    }
-                    maxIterations = 0;
+                        int elementToUse = Random.Range(0, elements.Length);
 
-                    GameObject element = Instantiate(elements[elementToUse], tempPosition, Quaternion.identity);
-                    element.GetComponent<Element>().row = j;
-                    element.GetComponent<Element>().column = i;
-                    element.transform.parent = this.transform;
-                    element.name = "( " + i + ", " + j + " )";
-                    allElements[i, j] = element;
-                }
-                else
-                {
-                    Debug.LogError("No elements assigned to the BackgroundTile.");
+                        int maxIterations = 0;
+                        while (MatchesAt(i, j, elements[elementToUse]) && maxIterations < 100)
+                        {
+                            elementToUse = Random.Range(0, elements.Length);
+                            maxIterations++;
+                        }
+                        maxIterations = 0;
+
+                        GameObject element = Instantiate(elements[elementToUse], tempPosition, Quaternion.identity);
+                        element.GetComponent<Element>().row = j;
+                        element.GetComponent<Element>().column = i;
+                        element.transform.parent = this.transform;
+                        element.name = "( " + i + ", " + j + " )";
+                        allElements[i, j] = element;
+                    }
                 }
             }
         }
@@ -74,35 +121,48 @@ public class Board : MonoBehaviour
     {
         if (column > 1 && row > 1)
         {
-            if (allElements[column - 1, row].tag == piece.tag &&
-                allElements[column - 2, row].tag == piece.tag)
+            if (allElements[column - 1, row] != null && allElements[column - 2, row] != null)
+            {
+                if (allElements[column - 1, row].tag == piece.tag &&
+                    allElements[column - 2, row].tag == piece.tag)
                 {
                     return true;
                 }
+            }
 
-            if (allElements[column, row - 1].tag == piece.tag &&
-                allElements[column, row - 2].tag == piece.tag)
+            if (allElements[column, row - 1] != null && allElements[column, row - 2] != null)
+            {
+                if (allElements[column, row - 1].tag == piece.tag &&
+                    allElements[column, row - 2].tag == piece.tag)
                 {
                     return true;
                 }
+            }
         }
         else if (column <= 1 || row <= 1)
         {
             if (row > 1)
             {
-                if (allElements[column, row - 1].tag == piece.tag &&
-                    allElements[column, row - 2].tag == piece.tag)
+                if (allElements[column, row - 1] != null && allElements[column, row - 2] != null)
+                {
+                    if (allElements[column, row - 1].tag == piece.tag &&
+                        allElements[column, row - 2].tag == piece.tag)
                     {
                         return true;
                     }
+                }
             }
+
             if (column > 1)
             {
-                if (allElements[column - 1, row].tag == piece.tag &&
-                    allElements[column - 2, row].tag == piece.tag)
+                if (allElements[column - 1, row] != null && allElements[column - 2, row] != null)
+                {
+                    if (allElements[column - 1, row].tag == piece.tag &&
+                        allElements[column - 2, row].tag == piece.tag)
                     {
                         return true;
                     }
+                }
             }
         }
 
@@ -232,7 +292,37 @@ public class Board : MonoBehaviour
         }
 
         findMatches.currentMatches.Clear();
-        StartCoroutine(DecreaseRowCo());
+        StartCoroutine(DecreaseRowCo2());
+    }
+
+    private IEnumerator DecreaseRowCo2()
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                // If current spot is not blanc and is empty
+                if (!blankSpaces[i, j] && allElements[i, j] == null)
+                {
+                    // loop from space above to the top of the column
+                    for (int k = j + 1; k < height; k++)
+                    {
+                        // If element is found
+                        if (allElements[i, k] != null)
+                        {
+                            // move element to that empty space
+                            allElements[i, k].GetComponent<Element>().row = j;
+                            // set neighbour to null
+                            allElements[i, k] = null;
+                            // break out of the loop
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        yield return new WaitForSeconds(.4f);
+        StartCoroutine(FillBoardCo());
     }
 
     private IEnumerator DecreaseRowCo()
@@ -267,7 +357,7 @@ public class Board : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                if (allElements[i, j] == null) // has additional hasBeenUsed?
+                if (allElements[i, j] == null && !blankSpaces[i, j])
                 {
                     Vector2 tempPosition = new Vector2(i, j + offSet);
                     int elementToUse = Random.Range(0, elements.Length);

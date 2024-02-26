@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -305,6 +306,21 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3ae9f10c785642c8b0ee203781e9b77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraOffset: -10
+  aspectRatio: 0.625
+  padding: 2
 --- !u!1 &910724955
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,12 +370,50 @@ MonoBehaviour:
   height: 10
   offSet: 20
   tilePrefab: {fileID: 3791018284438028341, guid: e9b24fb6888d5451ea153631d3d7eaf3, type: 3}
+  breakableTilePrefab: {fileID: 221601296510918238, guid: 0881e322e269d407faeff12d1f4e6561, type: 3}
   elements:
   - {fileID: 7268380151107700020, guid: e75a98eba335b4634b95a92eaa262c61, type: 3}
   - {fileID: 5838761427168643266, guid: 08e02e942c9dd4633a082df15f1de80f, type: 3}
   - {fileID: 1703395890551888489, guid: 24830e077f3ec484f806da8ed893638a, type: 3}
   - {fileID: 7055640846806596859, guid: 124f8c6c1288f481bb184ef5c0f28d2c, type: 3}
   destroyEffect: {fileID: 5297747797145827348, guid: 232d8ee8f0a41479bbc4816422201437, type: 3}
+  boardLayout:
+  - x: 0
+    y: 0
+    tileKind: 1
+  - x: 6
+    y: 9
+    tileKind: 1
+  - x: 6
+    y: 0
+    tileKind: 1
+  - x: 0
+    y: 9
+    tileKind: 1
+  - x: 4
+    y: 4
+    tileKind: 1
+  - x: 5
+    y: 4
+    tileKind: 1
+  - x: 3
+    y: 4
+    tileKind: 1
+  - x: 2
+    y: 4
+    tileKind: 1
+  - x: 1
+    y: 4
+    tileKind: 1
+  - x: 1
+    y: 5
+    tileKind: 0
+  - x: 1
+    y: 6
+    tileKind: 0
+  - x: 1
+    y: 7
+    tileKind: 0
   currentElement: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
