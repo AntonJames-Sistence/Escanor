@@ -74,6 +74,8 @@ public class Board : MonoBehaviour
                 // Create "Ice" tile object
                 Vector2 tempPosition = new Vector2(boardLayout[i].x, boardLayout[i].y);
                 GameObject tile = Instantiate(breakableTilePrefab, tempPosition, Quaternion.identity);
+                // puts ice piece into array
+                breakableTiles[boardLayout[i].x, boardLayout[i].y] = tile.GetComponent<BackgroundTile>();
             }
         }
     }
@@ -271,6 +273,13 @@ public class Board : MonoBehaviour
                 CheckToGenerateSkills();
             }
 
+            // Does this tile need to break?
+            if (breakableTiles[column, row] != null)
+            {
+                // if it does, give one damage
+                breakableTiles[column, row].TakeDamage(1);
+            }
+
             GameObject destroyAnimation = Instantiate(destroyEffect, allElements[column, row].transform.position, Quaternion.identity);
             Destroy(destroyAnimation, .5f);
             Destroy(allElements[column, row]);
@@ -321,35 +330,10 @@ public class Board : MonoBehaviour
                 }
             }
         }
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(.6f);
         StartCoroutine(FillBoardCo());
     }
 
-    private IEnumerator DecreaseRowCo()
-    {
-        yield return new WaitForSeconds(.5f);
-
-        int nullCount = 0;
-        for (int i = 0; i < width; i++)
-        {
-            for (int j = 0; j < height; j++)
-            {
-                if (allElements[i, j] == null)
-                {
-                    nullCount++;
-                }
-                else if (nullCount > 0)
-                {
-                    allElements[i, j].GetComponent<Element>().row -= nullCount;
-                    allElements[i, j] = null;
-                }
-            }
-            nullCount = 0;
-        }
-
-        yield return new WaitForSeconds(.5f);
-        StartCoroutine(FillBoardCo());
-    }
 
     private void RefillBoard()
     {
@@ -392,7 +376,7 @@ public class Board : MonoBehaviour
     private IEnumerator FillBoardCo()
     {
         RefillBoard();
-        yield return new WaitForSeconds(.3f);
+        yield return new WaitForSeconds(.5f);
 
         while (MatchesOnBoard())
         {

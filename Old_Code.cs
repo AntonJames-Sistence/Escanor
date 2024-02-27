@@ -178,3 +178,29 @@
             // neighborElement.GetComponent<Element>().row += 1;
             // row -= 1;
             // StartCoroutine(CheckMoveCo());
+
+    // private IEnumerator DecreaseRowCo()
+    // {
+    //     yield return new WaitForSeconds(.5f);
+
+    //     int nullCount = 0;
+    //     for (int i = 0; i < width; i++)
+    //     {
+    //         for (int j = 0; j < height; j++)
+    //         {
+    //             if (allElements[i, j] == null)
+    //             {
+    //                 nullCount++;
+    //             }
+    //             else if (nullCount > 0)
+    //             {
+    //                 allElements[i, j].GetComponent<Element>().row -= nullCount;
+    //                 allElements[i, j] = null;
+    //             }
+    //         }
+    //         nullCount = 0;
+    //     }
+
+    //     yield return new WaitForSeconds(.5f);
+    //     StartCoroutine(FillBoardCo());
+    // }
