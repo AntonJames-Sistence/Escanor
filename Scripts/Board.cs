@@ -279,6 +279,10 @@ public class Board : MonoBehaviour
                 // if it does, give one damage
                 breakableTiles[column, row].TakeDamage(1);
                 // Debug.Log("Tile: " + breakableTiles[column, row].hitPoints +  "HP left:");
+                if (breakableTiles[column, row].hitPoints <= 0)
+                {
+                    breakableTiles[column, row] = null;
+                }
             }
 
             GameObject destroyAnimation = Instantiate(destroyEffect, allElements[column, row].transform.position, Quaternion.identity);
